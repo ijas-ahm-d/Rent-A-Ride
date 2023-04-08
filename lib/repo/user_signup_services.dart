@@ -2,18 +2,19 @@ import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
 import 'package:http/http.dart' as http;
-import 'api_status.dart';
+import 'package:rent_a_ride/repo/api_status.dart';
+import 'package:rent_a_ride/utils/url.dart';
 
-class ApiServices {
-  static Future<Object> postMethod(
-      String url, Map data, context, Function function) async {
+class UserSignupServices {
+  static Future signupUser(String url, Map data) async {
     try {
+      String url = Urls.baseUrl + Urls.user + Urls.userSignUp;
+
       final response = await http.post(Uri.parse(url), body: data);
       log("-------------${response.statusCode}-----------------");
       if (response.statusCode == 201 || response.statusCode == 200) {
-        log("finisheddddddddddddddd");
         log(response.body.toString());
-        return Success(response: function(response.body));
+        return Success();
       }
       return Failures(
           code: response.statusCode, errrorResponse: "Invalid Response");
@@ -29,13 +30,7 @@ class ApiServices {
       return Failures(code: 104, errrorResponse: "Time Out");
     } catch (e) {
       log(e.toString());
-      return Failures(code: 500, errrorResponse: "UNKnown error");
+      return Failures(code: 500, errrorResponse: "Unknown error");
     }
-
-    //  on DioError catch (e) {
-    //   DioExceptions().dioError(e, context);
-    // } on FormatException catch (e) {
-    //   log(e.message.toString());
-    // }
   }
 }

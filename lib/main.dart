@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rent_a_ride/view/splash/splash_screen.dart';
-import 'package:rent_a_ride/view_model/otp/otp_provider.dart';
-import 'package:rent_a_ride/view_model/signup/signup_provider.dart';
 import 'package:rent_a_ride/view_model/user_login_view_model.dart';
+import 'package:rent_a_ride/view_model/user_otp_view_model.dart';
 import 'package:rent_a_ride/view_model/user_profile/user_profile_provider.dart';
+import 'package:rent_a_ride/view_model/user_signup_view_model.dart';
 
 const saveKeyName = "IsLoggedIn";
 void main() {
@@ -25,11 +25,9 @@ class MyApp extends StatelessWidget {
           create: (context) => UserLoginViewModel(),
         ),
          ChangeNotifierProvider(
-          create: (context) => SignupProvider(),
+          create: (context) => UserSignupViewModel(),
         ),
-        ChangeNotifierProvider(
-          create: (context) => OtpProvider(),
-        ),
+       
         // user profile provider
         ChangeNotifierProvider(
           create: (context) {

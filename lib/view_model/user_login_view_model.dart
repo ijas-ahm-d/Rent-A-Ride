@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:rent_a_ride/components/common_snackbar.dart';
 import 'package:rent_a_ride/models/user_login_model.dart';
@@ -10,7 +9,6 @@ import 'package:rent_a_ride/view/home/home_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserLoginViewModel with ChangeNotifier {
-  
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
@@ -43,7 +41,7 @@ class UserLoginViewModel with ChangeNotifier {
     return _userData;
   }
 
-  // 
+  //
   setLoginError(LoginError loginError, context) async {
     _loginError = loginError;
     return errorResponses(_loginError!, context);
@@ -53,12 +51,13 @@ class UserLoginViewModel with ChangeNotifier {
   getLoginStatus(BuildContext context) async {
     final navigator = Navigator.of(context);
     setLoading(true);
-
+    String url = Urls.baseUrl + Urls.user + Urls.userLogIn;
     final response = await ApiServices.postMethod(
-        Urls.baseUrl + Urls.user + Urls.userLogIn,
-        userDataBody(),
-        context,
-        userLoginModelFromJson);
+      url,
+      userDataBody(),
+      context,
+      userLoginModelFromJson,
+    );
 
     if (response is Success) {
       final data = await setUserData(response.response as UserLoginModel);
@@ -88,7 +87,7 @@ class UserLoginViewModel with ChangeNotifier {
     emailController.clear();
   }
 
-  // save the value of access token and make sure the user already login or not 
+  // save the value of access token and make sure the user already login or not
   setLoginStatus(String accessToken) async {
     final status = await SharedPreferences.getInstance();
     await status.setBool("isLoggedIn", true);
@@ -106,7 +105,7 @@ class UserLoginViewModel with ChangeNotifier {
 
   errorResponses(LoginError loginError, BuildContext context) {
     final statusCode = loginError.code;
-    if (statusCode == 401||statusCode==500) {
+    if (statusCode == 401 || statusCode == 500) {
       return CommonSnackBAr().snackBar(
           context: context,
           data: "Invalid Username or password",

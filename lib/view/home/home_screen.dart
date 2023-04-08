@@ -1,21 +1,15 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
+import 'package:rent_a_ride/components/common_snackbar.dart';
 import 'package:rent_a_ride/utils/colors.dart';
 import 'package:rent_a_ride/utils/space.dart';
 import 'package:rent_a_ride/view/home/widgets/offercard.dart';
-import 'package:rent_a_ride/view/login/login_screen.dart';
 import 'package:rent_a_ride/view/splash/splash_screen.dart';
-import 'package:rent_a_ride/view_model/user_profile/user_profile_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../widgets/msgsnackbar.dart';
-
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
   final List images = [
-    // "assets/images/car1.png",
     "assets/images/car1.png",
     "assets/images/car2.png",
     "assets/images/car3.png",
@@ -53,7 +47,7 @@ class HomeScreen extends StatelessWidget {
                                   return const SplashScreen();
                                 },
                               ), (route) => false);
-                              MsgSnackBAr().snackBar(context: context, data: " Log Out", color: specialGreen);
+                              CommonSnackBAr().snackBar(context: context, data: " Log Out", color: specialGreen);
               },
               icon:const Icon(Icons.logout),
             ),

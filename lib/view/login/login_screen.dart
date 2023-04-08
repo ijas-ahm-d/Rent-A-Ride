@@ -121,15 +121,6 @@ class LoginScreen extends StatelessWidget {
                             await context
                                 .read<UserLoginViewModel>()
                                 .getLoginStatus(context);
-
-                            //   UserLoginModel userLoginModel = UserLoginModel(
-                            //       email: providervalue.emailController.text,
-                            //       password:
-                            //           providervalue.passwordController.text);
-                            // await  UserLoginApiServices().loginApiServices(
-                            //     userLoginModel: userLoginModel.toJson(),
-                            //     context: context,
-                            //   );
                           }
                         },
                         child: const Padding(

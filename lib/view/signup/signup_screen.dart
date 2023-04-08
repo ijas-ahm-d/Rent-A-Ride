@@ -1,18 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:rent_a_ride/model/signup/services/signup_services.dart';
-import 'package:rent_a_ride/model/signup/signup_model.dart';
 import 'package:rent_a_ride/utils/colors.dart';
 import 'package:rent_a_ride/utils/images.dart';
 import 'package:rent_a_ride/utils/space.dart';
 import 'package:rent_a_ride/utils/textstyle.dart';
 import 'package:rent_a_ride/view/login/login_screen.dart';
-import 'package:rent_a_ride/view/otp/otp_screen.dart';
-// import 'package:rent_a_ride/view/otp/otp_screen.dart';
 import 'package:rent_a_ride/view/widgets/textformfield.dart';
-import 'package:rent_a_ride/view_model/signup/signup_provider.dart';
-
-// final signUpvalidateKey = GlobalKey<FormState>();
+import 'package:rent_a_ride/view_model/user_signup_view_model.dart';
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
@@ -23,9 +17,9 @@ class SignUpScreen extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: blackBG,
-      body: Consumer<SignupProvider>(
+      body: Consumer<UserSignupViewModel>(
         builder: (context, providerValue, child) => Form(
-          key: providerValue.SignUpFormKey,
+          key: providerValue.signUpFormKey,
           child: GestureDetector(
             onTap: () {
               FocusScopeNode curentFocus = FocusScope.of(context);
@@ -130,25 +124,12 @@ class SignUpScreen extends StatelessWidget {
                           const MaterialStatePropertyAll(blueButton),
                       overlayColor: MaterialStateProperty.all(Colors.green),
                     ),
-                    onPressed: () {
-                      
-                      if (providerValue.SignUpFormKey.currentState!
+                    onPressed: () async {
+                      if (providerValue.signUpFormKey.currentState!
                           .validate()) {
-                        SignUpModel signUpModel = SignUpModel(
-                            email: providerValue.emailController.text,
-                            fullName: providerValue.nameController.text,
-                            phoneNumber:
-                                providerValue.phoneNumberController.text,
-                            password: providerValue.passwordController.text);
-
-                        SignUpService().signUpApiServices(
-                          signUpModel: signUpModel,
-                          context: context,
-                          phoneNumber: providerValue.phoneNumberController.text,
-                          email: providerValue.emailController.text,
-                          fullName: providerValue.nameController.text,
-                          password: providerValue.passwordController.text,
-                        );
+                        await context
+                            .read<UserSignupViewModel>()
+                            .getSignUpStatus(context);
                       }
                     },
                     child: const Padding(
