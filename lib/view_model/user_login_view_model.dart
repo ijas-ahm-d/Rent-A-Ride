@@ -66,7 +66,7 @@ class UserLoginViewModel with ChangeNotifier {
       setLoginStatus(accessToken!);
       navigator.pushAndRemoveUntil(MaterialPageRoute(
         builder: (context) {
-          return HomeScreen();
+          return  HomeScreen();
         },
       ), (route) => false);
     }

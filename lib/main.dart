@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rent_a_ride/view/splash/splash_screen.dart';
 import 'package:rent_a_ride/view_model/user_login_view_model.dart';
-import 'package:rent_a_ride/view_model/user_otp_view_model.dart';
 import 'package:rent_a_ride/view_model/user_profile/user_profile_provider.dart';
 import 'package:rent_a_ride/view_model/user_signup_view_model.dart';
 
@@ -24,10 +23,10 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => UserLoginViewModel(),
         ),
-         ChangeNotifierProvider(
+        ChangeNotifierProvider(
           create: (context) => UserSignupViewModel(),
         ),
-       
+
         // user profile provider
         ChangeNotifierProvider(
           create: (context) {

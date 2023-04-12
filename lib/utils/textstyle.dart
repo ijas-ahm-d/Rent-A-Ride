@@ -2,6 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rent_a_ride/utils/colors.dart';
 
+TextStyle homeHead(size) {
+  return GoogleFonts.truculenta(
+      wordSpacing: 2,
+      // backgroundColor: bodyColor,
+      // color: blueButton,
+      // color: blueButton,
+      color: grayText,
+      fontWeight: FontWeight.w700,
+      letterSpacing: 2,
+      fontSize: size.width * 0.06,
+      decoration: TextDecoration.underline,
+      decorationStyle: TextDecorationStyle.dotted,
+      decorationThickness: 3,
+      decorationColor: kBlack);
+}
+
 final headline = GoogleFonts.truculenta(
   fontSize: 35,
   letterSpacing: 3,
@@ -9,11 +25,6 @@ final headline = GoogleFonts.truculenta(
   fontWeight: FontWeight.bold,
 );
 
-const headlineDot = TextStyle(
-  fontSize: 30,
-  color: blueText,
-  fontWeight: FontWeight.bold,
-);
 const headline1 = TextStyle(
   fontSize: 24,
   color: kwhite,
@@ -32,6 +43,19 @@ const headline3 = TextStyle(
 );
 final headline4 = GoogleFonts.truculenta(
   color: grayText,
+  fontWeight: FontWeight.w700,
+  letterSpacing: 2,
+  fontSize: 20,
+);
+final headline5 = GoogleFonts.truculenta(
+  color: kwhite,
+  fontWeight: FontWeight.w700,
+  letterSpacing: 2,
+  fontSize: 20,
+);
+
+final headline6 = GoogleFonts.truculenta(
+  color: kBlack,
   fontWeight: FontWeight.w700,
   letterSpacing: 2,
   fontSize: 20,

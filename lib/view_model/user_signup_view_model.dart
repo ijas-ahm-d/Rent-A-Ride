@@ -33,8 +33,8 @@ class UserSignupViewModel with ChangeNotifier {
   bool get isOtpLoading => _isOtpLoading;
 // ****************
 
-  UserSignUpModel? _userData;
-  UserSignUpModel get userData => _userData!;
+  // UserSignUpModel? _userData;
+  // UserSignUpModel get userData => _userData!;
 
   UserOtpModel? _userOtpData;
   UserOtpModel get userOtpData => _userOtpData!;
@@ -62,10 +62,10 @@ class UserSignupViewModel with ChangeNotifier {
   }
 // ****************
 
-  Future<UserSignUpModel?> setUserData(UserSignUpModel userData) async {
-    _userData = userData;
-    return _userData;
-  }
+  // Future<UserSignUpModel?> setUserData(UserSignUpModel userData) async {
+  //   _userData = userData;
+  //   return _userData;
+  // }
 
   Future<UserOtpModel?> setUserOtpData(UserOtpModel userOtpData) async {
     _userOtpData = userOtpData;
