@@ -6,8 +6,6 @@ import 'package:rent_a_ride/view/home/widgets/home_available_cars.dart';
 import 'package:rent_a_ride/view/home/widgets/driver_ads.dart';
 import 'package:rent_a_ride/view/home/widgets/home_best_offers.dart';
 import 'package:rent_a_ride/view/home/widgets/user_drawer.dart';
-import 'package:rent_a_ride/view/splash/splash_screen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -15,6 +13,8 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    // final providerCar = context.watch<CarsViewModel>();
+    // final providerPlace = context.watch<PlacesViewModel>();
     return Scaffold(
       // backgroundColor: bodyColor,
       backgroundColor: kwhite,
@@ -33,20 +33,11 @@ class HomeScreen extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            onPressed: () async {
-              final SharedPreferences prefs =
-                  await SharedPreferences.getInstance();
-              prefs.remove("isLoggedIn");
-              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-                builder: (context) {
-                  return const SplashScreen();
-                },
-              ), (route) => false);
-              // CommonSnackBAr().snackBar(
-              //     context: context, data: " Log Out", color: specialGreen);
-            },
-            icon: const Icon(Icons.logout),
-          ),
+              onPressed: () {
+                // providerPlace.getAllPlaces();
+                // providerCar.getAllCars();
+              },
+              icon: const Icon(Icons.accessibility_outlined))
         ],
       ),
       body: SingleChildScrollView(
@@ -79,7 +70,7 @@ class HomeScreen extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => CarList(),
+                          builder: (context) => const CarList(),
                         ),
                       );
                     },

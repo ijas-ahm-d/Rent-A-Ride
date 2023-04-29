@@ -112,6 +112,7 @@ class UserSignupViewModel with ChangeNotifier {
         code: response.code,
         message: response.errrorResponse,
       );
+      // ignore: use_build_context_synchronously
       await setSignUpError(signUpError, context);
     }
     setLoading(false);
@@ -137,7 +138,7 @@ class UserSignupViewModel with ChangeNotifier {
       setLoginStatus(accessToken!);
       navigator.pushAndRemoveUntil(MaterialPageRoute(
         builder: (context) {
-          return HomeScreen();
+          return const HomeScreen();
         },
       ), (route) => false);
     }
@@ -148,6 +149,7 @@ class UserSignupViewModel with ChangeNotifier {
         code: response.code,
         message: response.errrorResponse,
       );
+      // ignore: use_build_context_synchronously
       await setOtpError(otpError, context);
     }
 
@@ -185,8 +187,7 @@ class UserSignupViewModel with ChangeNotifier {
     await status.setString("ACCESS_TOKEN", accessToken);
   }
 
-    clearControllers(context) {
-  
+  clearControllers(context) {
     otpController1.clear();
     nameController.clear();
     emailController.clear();
@@ -194,8 +195,8 @@ class UserSignupViewModel with ChangeNotifier {
     passwordController.clear();
   }
 
-  otpButton(context)async {
-   await getOtpStatus(context);
+  otpButton(context) async {
+    await getOtpStatus(context);
     clearControllers(context);
   }
 
@@ -205,7 +206,7 @@ class UserSignupViewModel with ChangeNotifier {
   errorResponses(SignUpError signUpError, BuildContext context) {
     final statusCode = signUpError.code;
     if (statusCode == 400 || statusCode == 500) {
-      return CommonSnackBAr().snackBar(
+      return CommonSnackBAr.snackBar(
         context: context,
         data: "User Already Exists",
         color: snackbarRed,
@@ -214,7 +215,7 @@ class UserSignupViewModel with ChangeNotifier {
       log("Aryooooooola");
     }
 
-    return CommonSnackBAr().snackBar(
+    return CommonSnackBAr.snackBar(
       context: context,
       data: "No Internet connection",
       color: snackbarRed,
@@ -225,13 +226,13 @@ class UserSignupViewModel with ChangeNotifier {
   errorResponseOtp(OtpError otpError, BuildContext context) {
     final statusCode = otpError.code;
     if (statusCode == 400 || statusCode == 408) {
-      return CommonSnackBAr().snackBar(
+      return CommonSnackBAr.snackBar(
         context: context,
         data: "Invalid Otp",
         color: snackbarRed,
       );
     }
-    return CommonSnackBAr().snackBar(
+    return CommonSnackBAr.snackBar(
       context: context,
       data: "No Internet connection",
       color: snackbarRed,

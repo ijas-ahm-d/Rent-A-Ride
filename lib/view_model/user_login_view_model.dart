@@ -66,7 +66,7 @@ class UserLoginViewModel with ChangeNotifier {
       setLoginStatus(accessToken!);
       navigator.pushAndRemoveUntil(MaterialPageRoute(
         builder: (context) {
-          return  HomeScreen();
+          return const  HomeScreen();
         },
       ), (route) => false);
     }
@@ -77,6 +77,7 @@ class UserLoginViewModel with ChangeNotifier {
         code: response.code,
         message: response.errrorResponse,
       );
+      // ignore: use_build_context_synchronously
       await setLoginError(loginError, context);
     }
     setLoading(false);
@@ -106,12 +107,12 @@ class UserLoginViewModel with ChangeNotifier {
   errorResponses(LoginError loginError, BuildContext context) {
     final statusCode = loginError.code;
     if (statusCode == 401 || statusCode == 500) {
-      return CommonSnackBAr().snackBar(
+      return CommonSnackBAr.snackBar(
           context: context,
           data: "Invalid Username or password",
           color: snackbarRed);
     }
-    return CommonSnackBAr().snackBar(
+    return CommonSnackBAr.snackBar(
         context: context, data: "No internet connection", color: snackbarRed);
   }
 }

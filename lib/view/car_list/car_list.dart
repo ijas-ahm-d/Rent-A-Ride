@@ -1,54 +1,41 @@
 import 'package:flutter/material.dart';
-import 'package:rent_a_ride/utils/colors.dart';
-import 'package:rent_a_ride/view/home/widgets/home_available_cars.dart';
+import 'package:provider/provider.dart';
+
+import 'package:rent_a_ride/view/car_list/components/all_cars.dart';
+import 'package:rent_a_ride/view/car_list/components/brand_selection.dart';
+
+import '../../view_model/cars/cars_view_model.dart';
+
+TextEditingController helo = TextEditingController();
 
 class CarList extends StatelessWidget {
-  final List images = [
-    "assets/images/car1.png",
-    "assets/images/car2.png",
-    "assets/images/car3.png",
-    "assets/images/carOtp.png",
-    "assets/images/car2.png",
-    "assets/images/car3.png",
-    "assets/images/car3.png",
-    "assets/images/carOtp.png",
-    "assets/images/car2.png",
-    "assets/images/car1.png",
-  ];
-  CarList({super.key});
+  const CarList({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
+    final providerCar = context.watch<CarsViewModel>();
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: bodyColor,
-        title: const Text("ALL CARS"),
+        iconTheme: const IconThemeData(color: Colors.black),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(left: 10.0),
-        child: GridView.builder(
-          itemCount: 10,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              mainAxisExtent: size.width * 0.65,
-              childAspectRatio: 0.85,
-              crossAxisSpacing: 2,
-              mainAxisSpacing: 2),
-          itemBuilder: (context, index) {
-            return Padding(
-              padding: const EdgeInsets.all(4),
-              child: InkWell(
-                onTap: () {},
-                child: CarCard(
-                  size: size,
-                  images: images[index],
-                ),
-              ),
-            );
-          },
-        ),
+      body: Column(
+        children: [
+          BrandSelection(),
+          AllCars(
+            carData: providerCar.currentBrandIndex == 0
+                ? providerCar.carsDataList
+                : providerCar.currentBrandIndex == 1
+                    ? providerCar.audiCarsList
+                    : providerCar.currentBrandIndex == 2
+                        ? providerCar.benzCarsList
+                        : providerCar.currentBrandIndex == 3
+                            ? providerCar.miniCarsList
+                            : providerCar.bmwCarsList,
+          ),
+        ],
       ),
     );
   }

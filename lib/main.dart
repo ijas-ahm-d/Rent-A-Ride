@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rent_a_ride/view/splash/splash_screen.dart';
+import 'package:rent_a_ride/view_model/booking/booking_view_model.dart';
+import 'package:rent_a_ride/view_model/cars/cars_view_model.dart';
+import 'package:rent_a_ride/view_model/places/places_view_model.dart';
 import 'package:rent_a_ride/view_model/user_login_view_model.dart';
 import 'package:rent_a_ride/view_model/user_profile/user_profile_provider.dart';
 import 'package:rent_a_ride/view_model/user_signup_view_model.dart';
@@ -21,12 +24,20 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
+          create: (context) => CarsViewModel(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => PlacesViewModel(),
+        ),
+        ChangeNotifierProvider(
           create: (context) => UserLoginViewModel(),
         ),
         ChangeNotifierProvider(
           create: (context) => UserSignupViewModel(),
         ),
-
+        ChangeNotifierProvider(
+          create: (context) => BookingViewModel(),
+        ),
         // user profile provider
         ChangeNotifierProvider(
           create: (context) {

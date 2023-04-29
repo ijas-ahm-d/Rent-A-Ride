@@ -5,9 +5,6 @@ import 'package:rent_a_ride/utils/colors.dart';
 TextStyle homeHead(size) {
   return GoogleFonts.truculenta(
       wordSpacing: 2,
-      // backgroundColor: bodyColor,
-      // color: blueButton,
-      // color: blueButton,
       color: grayText,
       fontWeight: FontWeight.w700,
       letterSpacing: 2,
@@ -72,3 +69,16 @@ final splashHead = GoogleFonts.truculenta(
   letterSpacing: 16,
   fontSize: 30,
 );
+
+final titleCardName = GoogleFonts.montserrat(
+  fontSize: 20,
+  fontWeight: FontWeight.w500,
+);
+
+textstyle(double size, FontWeight fweight, Color clr) {
+  return GoogleFonts.montserrat(
+    fontSize: size,
+    fontWeight: fweight,
+    color: clr,
+  );
+}

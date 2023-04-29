@@ -7,7 +7,7 @@ import 'package:rent_a_ride/view/signup/signup_screen.dart';
 import 'package:rent_a_ride/view_model/user_login_view_model.dart';
 import '../../utils/colors.dart';
 import '../widgets/textformfield.dart';
-
+import 'package:lottie/lottie.dart';
 /// This screen is for user login
 /// If the user have already an account
 /// on our application then user can Log in
@@ -23,18 +23,15 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
 // Media Query
     final size = MediaQuery.of(context).size;
+    final providervalue = context.watch<UserLoginViewModel>();
     return Scaffold(
       backgroundColor: blackBG,
       body: SafeArea(
-        child: Consumer<UserLoginViewModel>(
-          builder: (context, providervalue, child) {
-            // return providervalue.isLoading
-            //     ? const Center(
-            //         child: CircularProgressIndicator(
-            //         strokeWidth: 2,
-            //       ))
-            //     : 
-            return Form(
+        child:
+             providervalue.isLoading
+                ? Center(child: Lottie.asset("assets/lottie/splashCar.json",),)
+                : 
+             Form(
                     key: _formkey,
                     child: GestureDetector(
                       onTap: () {
@@ -180,10 +177,9 @@ class LoginScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                  );
-          },
-        ),
-      ),
-    );
-  }
+                  )));
+          }
+        
+      
+  
 }

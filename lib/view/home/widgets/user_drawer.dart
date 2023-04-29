@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:rent_a_ride/utils/colors.dart';
 import 'package:rent_a_ride/utils/textstyle.dart';
+import 'package:rent_a_ride/view/splash/splash_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UserDrawer extends StatelessWidget {
   const UserDrawer({
@@ -85,7 +87,17 @@ class UserDrawer extends StatelessWidget {
               color: hashColor,
             ),
             title: const Text("Log Out"),
-            onTap: () {},
+            onTap: () async{
+              final SharedPreferences prefs =
+                  await SharedPreferences.getInstance();
+              prefs.remove("isLoggedIn");
+              // ignore: use_build_context_synchronously
+              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                builder: (context) {
+                  return const SplashScreen();
+                },
+              ), (route) => false);
+            },
           ),
         ],
       ),

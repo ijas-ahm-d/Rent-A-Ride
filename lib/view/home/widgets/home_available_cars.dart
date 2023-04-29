@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:rent_a_ride/utils/colors.dart';
 import 'package:rent_a_ride/utils/space.dart';
+import 'package:rent_a_ride/view/car_details/car_details.dart';
 import 'package:rent_a_ride/view/single_car/single_car.dart';
+import 'package:rent_a_ride/view_model/cars/cars_view_model.dart';
 
 class HomeAvailbleCars extends StatelessWidget {
   final List images = [
@@ -20,6 +23,7 @@ class HomeAvailbleCars extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final providerCar = context.watch<CarsViewModel>();
     return SizedBox(
       height: size.height * 0.28,
       child: Row(
@@ -32,13 +36,15 @@ class HomeAvailbleCars extends StatelessWidget {
               ),
               scrollDirection: Axis.horizontal,
               shrinkWrap: true,
-              itemCount: 4,
+              itemCount: providerCar.carsDataList.length > 4
+                  ? 4
+                  : providerCar.carsDataList.length,
               itemBuilder: (BuildContext context, int index) {
                 return Padding(
                   padding: const EdgeInsets.only(left: 8.0),
                   child: CarCard(
+                    index: index,
                     size: size,
-                    images: images[index],
                   ),
                 );
               },
@@ -54,14 +60,14 @@ class CarCard extends StatelessWidget {
   const CarCard({
     super.key,
     required this.size,
-    required this.images,
+    required this.index,
   });
 
   final Size size;
-  final String images;
-
+  final int index;
   @override
   Widget build(BuildContext context) {
+    final providerCar = context.watch<CarsViewModel>();
     return Stack(
       children: [
         Positioned(
@@ -86,7 +92,9 @@ class CarCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Text(
-                    "BUGATTI CHIRON",
+                    providerCar.carsDataList[index].name
+                        .toString()
+                        .toUpperCase(),
                     textAlign: TextAlign.center,
                     maxLines: 1,
                     style: GoogleFonts.baskervville(
@@ -100,7 +108,7 @@ class CarCard extends StatelessWidget {
                   ),
                   Center(
                     child: Text(
-                      "650/Hour",
+                      "${providerCar.carsDataList[index].rent}/Hour",
                       maxLines: 1,
                       style: GoogleFonts.albertSans(
                         color: bodyColor,
@@ -116,10 +124,18 @@ class CarCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Row(
-                        children: const [Icon(Icons.local_taxi), Text("2021")],
+                        children: [
+                          const Icon(Icons.local_taxi),
+                          Text(providerCar.carsDataList[index].model.toString())
+                        ],
                       ),
                       Row(
-                        children: const [Icon(Icons.settings), Text("AUTO")],
+                        children: [
+                          const Icon(Icons.settings),
+                          Text(providerCar.carsDataList[index].transmission
+                              .toString()
+                              .toUpperCase())
+                        ],
                       ),
                     ],
                   ),
@@ -138,8 +154,9 @@ class CarCard extends StatelessWidget {
                         onPressed: () {
                           Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) {
-                              return SingleCarDetails(
-                                image: images,
+                              return CarDetailsScreen(
+                                carData: providerCar.carsDataList,
+                                index: index,
                               );
                             },
                           ));
@@ -156,7 +173,8 @@ class CarCard extends StatelessWidget {
                           Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) {
                               return SingleCarDetails(
-                                image: images,
+                                index: index,
+                                // image: images,
                               );
                             },
                           ));
@@ -176,8 +194,8 @@ class CarCard extends StatelessWidget {
           child: Column(
             children: [
               SizedBox(
-                child: Image.asset(
-                  images,
+                child: Image.network(
+                  providerCar.carsDataList[index].image!,
                   width: size.width * 0.35,
                 ),
               ),

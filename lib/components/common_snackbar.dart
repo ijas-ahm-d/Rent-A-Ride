@@ -3,7 +3,7 @@ import 'package:rent_a_ride/utils/colors.dart';
 
 class CommonSnackBAr
  {
-  snackBar({
+static  snackBar({
     required BuildContext context,
     required String data,
     required Color color,
