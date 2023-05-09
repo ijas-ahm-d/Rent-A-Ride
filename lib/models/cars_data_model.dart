@@ -1,10 +1,11 @@
+
 import 'dart:convert';
 
-List<CarDataModel> carDataModelFromJson(String str) => List<CarDataModel>.from(json.decode(str).map((x) => CarDataModel.fromJson(x)));
+List<CarsDataModel> carsDataModelFromJson(String str) => List<CarsDataModel>.from(json.decode(str).map((x) => CarsDataModel.fromJson(x)));
 
-String carDataModelToJson(List<CarDataModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String carsDataModelToJson(List<CarsDataModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class CarDataModel {
+class CarsDataModel {
     String? id;
     String? name;
     String? rent;
@@ -22,7 +23,7 @@ class CarDataModel {
     DateTime? updatedAt;
     int? v;
 
-    CarDataModel({
+    CarsDataModel({
         this.id,
         this.name,
         this.rent,
@@ -41,7 +42,7 @@ class CarDataModel {
         this.v,
     });
 
-    factory CarDataModel.fromJson(Map<String, dynamic> json) => CarDataModel(
+    factory CarsDataModel.fromJson(Map<String, dynamic> json) => CarsDataModel(
         id: json["_id"],
         name: json["name"],
         rent: json["rent"],
@@ -81,8 +82,8 @@ class CarDataModel {
 }
 
 class BookedSlot {
-    DateTime? from;
-    DateTime? to;
+    String? from;
+    String? to;
     String? id;
 
     BookedSlot({
@@ -92,14 +93,14 @@ class BookedSlot {
     });
 
     factory BookedSlot.fromJson(Map<String, dynamic> json) => BookedSlot(
-        from: json["from"] == null ? null : DateTime.parse(json["from"]),
-        to: json["to"] == null ? null : DateTime.parse(json["to"]),
+        from: json["from"],
+        to: json["to"],
         id: json["_id"],
     );
 
     Map<String, dynamic> toJson() => {
-        "from": from?.toIso8601String(),
-        "to": to?.toIso8601String(),
+        "from": from,
+        "to": to,
         "_id": id,
     };
 }

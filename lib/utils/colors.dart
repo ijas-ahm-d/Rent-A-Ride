@@ -17,7 +17,7 @@ const snackbarRed = Color.fromARGB(255, 235, 80, 78);
 const specialCard = LinearGradient(
   colors: [
     Color.fromARGB(255, 0, 0, 0),
-    Color.fromARGB(255, 45, 52, 54),
+    Color.fromARGB(188, 45, 52, 54),
   ],
   begin: Alignment.centerLeft,
   end: Alignment.bottomRight,
@@ -28,5 +28,5 @@ const specialCard2 = LinearGradient(
     Color.fromARGB(255, 0, 78, 146),
   ],
   begin: Alignment.centerLeft,
-  end: Alignment.bottomRight,
+  end: Alignment.centerRight,
 );

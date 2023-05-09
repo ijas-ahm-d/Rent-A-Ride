@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:rent_a_ride/models/cars/cars_data_model.dart';
+import 'package:rent_a_ride/models/cars_data_model.dart';
 import 'package:rent_a_ride/utils/colors.dart';
 import 'package:rent_a_ride/utils/space.dart';
 import 'package:rent_a_ride/view/car_details/car_details.dart';
 
 class CarItems extends StatelessWidget {
-  final List<CarDataModel> carData;
+  final List<CarsDataModel> carData;
 
   final int index;
   const CarItems({

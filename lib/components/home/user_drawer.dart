@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:rent_a_ride/components/drawer/bookings/user_bookings.dart';
+import 'package:rent_a_ride/components/drawer/sevices/user_services.dart';
 import 'package:rent_a_ride/utils/colors.dart';
 import 'package:rent_a_ride/utils/textstyle.dart';
 import 'package:rent_a_ride/view/splash/splash_screen.dart';
+import 'package:rent_a_ride/view_model/my_bookings_view_model.dart';
+import 'package:rent_a_ride/view_model/user_login_view_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserDrawer extends StatelessWidget {
@@ -11,17 +16,20 @@ class UserDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final p = context.watch<MyBookingsViewModel>();
+
+    final provider = context.watch<UserLoginViewModel>();
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
           UserAccountsDrawerHeader(
             accountName: Text(
-              "IJAS AHAMMED",
+              provider.userName ?? "person 1",
               style: headline5,
             ),
-            accountEmail: const Text(
-              "Ijas@gmail.com",
+            accountEmail: Text(
+              provider.userEmail ?? "person@gmail.com",
               style: headline3,
             ),
             decoration: BoxDecoration(
@@ -39,7 +47,16 @@ class UserDrawer extends StatelessWidget {
               color: hashColor,
             ),
             title: const Text("My Bookings"),
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return const UserBookings();
+                  },
+                ),
+              );
+            },
           ),
           ListTile(
             leading: const Icon(
@@ -47,7 +64,16 @@ class UserDrawer extends StatelessWidget {
               color: hashColor,
             ),
             title: const Text("Popular Services"),
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return const UserServices();
+                  },
+                ),
+              );
+            },
           ),
           ListTile(
             leading: const Icon(
@@ -55,7 +81,13 @@ class UserDrawer extends StatelessWidget {
               color: hashColor,
             ),
             title: const Text("About us"),
-            onTap: () {},
+            onTap: () {
+              // Navigator.push(context, MaterialPageRoute(
+              //   builder: (context) {
+              //     return  Helo();
+              //   },
+              // ));
+            },
           ),
           ListTile(
             leading: const Icon(
@@ -87,10 +119,12 @@ class UserDrawer extends StatelessWidget {
               color: hashColor,
             ),
             title: const Text("Log Out"),
-            onTap: () async{
+            onTap: () async {
               final SharedPreferences prefs =
                   await SharedPreferences.getInstance();
               prefs.remove("isLoggedIn");
+              prefs.remove("USER_NAME");
+              prefs.remove("USER_EMAIL");
               // ignore: use_build_context_synchronously
               Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
                 builder: (context) {
@@ -104,3 +138,16 @@ class UserDrawer extends StatelessWidget {
     );
   }
 }
+
+// //GET THE user name
+// Future<String?> getUserName() async {
+//   final prefs = await SharedPreferences.getInstance();
+//   final userName = prefs.getString("USER_NAME");
+//   return userName;
+// }
+// //GET THE user Email
+// Future<String?> getUserEmail() async {
+//   final prefs = await SharedPreferences.getInstance();
+//   final userEmail = prefs.getString("USER_EMAIL");
+//   return userEmail;
+// }

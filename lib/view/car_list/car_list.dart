@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:rent_a_ride/view/car_list/components/all_cars.dart';
 import 'package:rent_a_ride/view/car_list/components/brand_selection.dart';
 
-import '../../view_model/cars/cars_view_model.dart';
+import '../../view_model/cars_view_model.dart';
 
 TextEditingController helo = TextEditingController();
 

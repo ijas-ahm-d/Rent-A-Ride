@@ -1,12 +1,9 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-// import 'package:flutter/services.dart';
 import 'package:rent_a_ride/utils/colors.dart';
 import 'package:rent_a_ride/utils/textstyle.dart';
 import 'package:rent_a_ride/view_model/user_login_view_model.dart';
-// import 'package:rent_a_ride/view_model/login/login_provider.dart';
-// import 'package:rent_a_ride/view_model/signup/signup_provider.dart';
 
 TextEditingController _passController = TextEditingController();
 TextEditingController get passController => _passController;

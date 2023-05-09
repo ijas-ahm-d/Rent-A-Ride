@@ -1,4 +1,5 @@
 class Success {
+  
   int? code;
   String? responseMsg;
   Object? response;

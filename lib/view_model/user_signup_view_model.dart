@@ -1,12 +1,11 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:rent_a_ride/components/common_snackbar.dart';
+import 'package:rent_a_ride/components/common/common_snackbar.dart';
 import 'package:rent_a_ride/models/user_otp_model.dart';
 import 'package:rent_a_ride/models/user_signup_model.dart';
 import 'package:rent_a_ride/repo/api_services.dart';
 import 'package:rent_a_ride/repo/api_status.dart';
-import 'package:rent_a_ride/repo/user_signup_services.dart';
 import 'package:rent_a_ride/utils/colors.dart';
 import 'package:rent_a_ride/utils/url.dart';
 import 'package:rent_a_ride/view/home/home_screen.dart';
@@ -62,11 +61,6 @@ class UserSignupViewModel with ChangeNotifier {
   }
 // ****************
 
-  // Future<UserSignUpModel?> setUserData(UserSignUpModel userData) async {
-  //   _userData = userData;
-  //   return _userData;
-  // }
-
   Future<UserOtpModel?> setUserOtpData(UserOtpModel userOtpData) async {
     _userOtpData = userOtpData;
     return _userOtpData;
@@ -89,7 +83,8 @@ class UserSignupViewModel with ChangeNotifier {
     final navigator = Navigator.of(context);
     setLoading(true);
     String url = Urls.baseUrl + Urls.user + Urls.userSignUp;
-    final response = await UserSignupServices.signupUser(url, userDataBody());
+    final response =
+        await ApiServices.postMethod(url: url, data: userDataBody());
 
     // Success
     if (response is Success) {
@@ -124,18 +119,25 @@ class UserSignupViewModel with ChangeNotifier {
     setLoadingOtp(true);
     String url = Urls.baseUrl + Urls.user + Urls.userOtp;
     final response = await ApiServices.postMethod(
-      url,
-      userOtpDataBody(context),
-      context,
-      userOtpModelFromJson,
+      url: url,
+      data: userOtpDataBody(context),
+      context: context,
+      function: userOtpModelFromJson,
     );
 
     // Success
     if (response is Success) {
       final data = await setUserOtpData(response.response as UserOtpModel);
       final accessToken = data!.token;
-
-      setLoginStatus(accessToken!);
+      final userId = data.sId;
+      final userName = data.fullName;
+      final userEmail = data.email;
+      setSignupStatus(
+          accessToken: accessToken!,
+          userId: userId!,
+          userName: userName!,
+          userEmail: userEmail!
+          );
       navigator.pushAndRemoveUntil(MaterialPageRoute(
         builder: (context) {
           return const HomeScreen();
@@ -181,10 +183,18 @@ class UserSignupViewModel with ChangeNotifier {
   }
 
   // save the value of access token and make sure the user already login or not
-  setLoginStatus(String accessToken) async {
+  setSignupStatus({
+    required String accessToken,
+    required String userId,
+    required String userName,
+    required String userEmail,
+  }) async {
     final status = await SharedPreferences.getInstance();
     await status.setBool("isLoggedIn", true);
     await status.setString("ACCESS_TOKEN", accessToken);
+    await status.setString("USER_ID", userId);
+    await status.setString("USER_NAME", userName);
+    await status.setString("USER_EMAIL", userEmail);
   }
 
   clearControllers(context) {

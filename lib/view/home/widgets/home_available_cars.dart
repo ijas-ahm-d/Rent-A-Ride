@@ -4,8 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:rent_a_ride/utils/colors.dart';
 import 'package:rent_a_ride/utils/space.dart';
 import 'package:rent_a_ride/view/car_details/car_details.dart';
-import 'package:rent_a_ride/view/single_car/single_car.dart';
-import 'package:rent_a_ride/view_model/cars/cars_view_model.dart';
+import 'package:rent_a_ride/view_model/cars_view_model.dart';
 
 class HomeAvailbleCars extends StatelessWidget {
   final List images = [
@@ -74,14 +73,15 @@ class CarCard extends StatelessWidget {
           bottom: 10,
           child: Container(
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: kwhite,
-                boxShadow: const [
-                  BoxShadow(
-                    blurRadius: 5,
-                    color: Colors.black38,
-                  )
-                ]),
+              borderRadius: BorderRadius.circular(10),
+              color: kwhite,
+              boxShadow: const [
+                BoxShadow(
+                  blurRadius: 5,
+                  color: Colors.black38,
+                )
+              ],
+            ),
             margin: const EdgeInsets.symmetric(horizontal: 5),
             height: size.width * 0.50,
             width: size.width * 0.40,
@@ -162,24 +162,6 @@ class CarCard extends StatelessWidget {
                           ));
                         },
                         child: const Text("Rent"),
-                      ),
-                      ElevatedButton(
-                        style: const ButtonStyle(
-                          backgroundColor: MaterialStatePropertyAll(
-                            Color.fromARGB(255, 0, 13, 107),
-                          ),
-                        ),
-                        onPressed: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) {
-                              return SingleCarDetails(
-                                index: index,
-                                // image: images,
-                              );
-                            },
-                          ));
-                        },
-                        child: const Text("Details"),
                       ),
                     ],
                   )

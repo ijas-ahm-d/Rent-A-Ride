@@ -1,5 +1,7 @@
+// import 'dart:developer';
+
 import 'package:flutter/material.dart';
-import 'package:rent_a_ride/components/common_snackbar.dart';
+import 'package:rent_a_ride/components/common/common_snackbar.dart';
 import 'package:rent_a_ride/models/user_login_model.dart';
 import 'package:rent_a_ride/repo/api_services.dart';
 import 'package:rent_a_ride/repo/api_status.dart';
@@ -9,8 +11,18 @@ import 'package:rent_a_ride/view/home/home_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserLoginViewModel with ChangeNotifier {
+  UserLoginViewModel() {
+    getUserDetails();
+  }
+
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
+  String? _userName;
+  String? get userName => _userName;
+
+  String? _userEmail;
+  String? get userEmail => _userEmail;
 
   bool _passwordVisibility = true;
   bool get passwordVisibility => _passwordVisibility;
@@ -53,20 +65,28 @@ class UserLoginViewModel with ChangeNotifier {
     setLoading(true);
     String url = Urls.baseUrl + Urls.user + Urls.userLogIn;
     final response = await ApiServices.postMethod(
-      url,
-      userDataBody(),
-      context,
-      userLoginModelFromJson,
+      url: url,
+      data: userDataBody(),
+      context: context,
+      function: userLoginModelFromJson,
     );
 
     if (response is Success) {
       final data = await setUserData(response.response as UserLoginModel);
       final accessToken = data!.token;
+      final userId = data.sId;
+      final userName = data.fullName;
+      final userEmail = data.email;
+
+      setLoginStatus(
+          accessToken: accessToken!,
+          userId: userId!,
+          userName: userName!,
+          userEmail: userEmail!);
       clearController();
-      setLoginStatus(accessToken!);
       navigator.pushAndRemoveUntil(MaterialPageRoute(
         builder: (context) {
-          return const  HomeScreen();
+          return const HomeScreen();
         },
       ), (route) => false);
     }
@@ -89,10 +109,27 @@ class UserLoginViewModel with ChangeNotifier {
   }
 
   // save the value of access token and make sure the user already login or not
-  setLoginStatus(String accessToken) async {
+  // and also sacing user id
+  setLoginStatus({
+    required String accessToken,
+    required String userId,
+    required String userName,
+    required String userEmail,
+  }) async {
     final status = await SharedPreferences.getInstance();
     await status.setBool("isLoggedIn", true);
     await status.setString("ACCESS_TOKEN", accessToken);
+    await status.setString("USER_ID", userId);
+    await status.setString("USER_NAME", userName);
+    await status.setString("USER_EMAIL", userEmail);
+  }
+
+//GET THE UserName and email
+  getUserDetails() async {
+    final prefs = await SharedPreferences.getInstance();
+    _userName = prefs.getString("USER_NAME");
+    _userEmail = prefs.getString("USER_EMAIL");
+    notifyListeners();
   }
 
   // The body to pass in the method

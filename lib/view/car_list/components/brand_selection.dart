@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rent_a_ride/utils/colors.dart';
 import 'package:rent_a_ride/utils/textstyle.dart';
-import 'package:rent_a_ride/view_model/cars/cars_view_model.dart';
+import 'package:rent_a_ride/view_model/cars_view_model.dart';
 
 class BrandSelection extends StatelessWidget {
   var brandList = [

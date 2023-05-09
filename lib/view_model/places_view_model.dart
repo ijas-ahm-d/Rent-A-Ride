@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:rent_a_ride/models/places/place_data_model.dart';
+import 'package:rent_a_ride/models/place_data_model.dart';
 import 'package:rent_a_ride/repo/api_services.dart';
 import 'package:rent_a_ride/repo/api_status.dart';
 import 'package:rent_a_ride/utils/url.dart';
@@ -9,22 +9,23 @@ import 'package:rent_a_ride/utils/url.dart';
 class PlacesViewModel extends ChangeNotifier {
   PlacesViewModel() {
     getAllPlaces();
-    // notifyListeners();
   }
   List<PlaceDataModel> _placeDataList = [];
   List<PlaceDataModel> get placeDataList => _placeDataList;
 
   final List<String> _placeList = [];
   List<String> get placeList => _placeList;
-  String? dropbutton;
+
+  String? _dropbutton;
+  String? get dropbutton => _dropbutton;
 
   getDropValue() {
-    dropbutton = _placeList.first;
+    _dropbutton = _placeList.first;
     notifyListeners();
   }
 
   setDropDown(String value) {
-    dropbutton = value;
+    _dropbutton = value;
     notifyListeners();
   }
 
@@ -55,8 +56,8 @@ class PlacesViewModel extends ChangeNotifier {
     setLoading(true);
     String url = Urls.baseUrl + Urls.admin + Urls.getAllPlaces;
     final response = await ApiServices.getMEthod(
-      url: url,
-      function: placeDataModelFromJson,
+    url:  url,
+     function:  placeDataModelFromJson,
     );
     log("get all places :1");
     if (response is Success) {

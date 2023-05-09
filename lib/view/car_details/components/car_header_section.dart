@@ -22,7 +22,6 @@ class CarHeaderSection extends StatelessWidget {
       width: double.infinity,
       height: size.width * 0.7,
       decoration: const BoxDecoration(
-        // color: Colors.black87,
         color: Color.fromARGB(255, 0, 49, 92),
         borderRadius: BorderRadius.only(
           bottomRight: Radius.circular(50),

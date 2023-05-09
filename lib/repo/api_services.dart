@@ -6,20 +6,23 @@ import 'api_status.dart';
 
 class ApiServices {
   // POST METHOD
-  static Future<Object> postMethod(
-      String url, Map data, context, Function function) async {
+  static Future<Object> postMethod({
+    required String url,
+    required Map data,
+    context,
+    Function? function,
+    Map<String, String>? headers,
+  }) async {
     try {
-      final response = await http.post(Uri.parse(url), body: data);
-      log("-------------${response.statusCode}-----------------");
+      final response =
+          await http.post(Uri.parse(url), body: data, headers: headers);
       if (response.statusCode == 201 || response.statusCode == 200) {
-        log("finisheddddddddddddddd");
-        log(response.body.toString());
-        return Success(response: function(response.body));
+        return Success(
+            response: function == null ? null : function(response.body));
       }
       return Failures(
           code: response.statusCode, errrorResponse: "Invalid Response");
     } on HttpException {
-      log("HELOOO ");
       return Failures(code: 101, errrorResponse: "No Internet");
     } on FormatException {
       return Failures(code: 102, errrorResponse: "Invalid Format");
@@ -34,25 +37,31 @@ class ApiServices {
     }
   }
 
-  //GET METHOD
-  static Future getMEthod(
-      {required String url, required Function function}) async {
+  // GET METHOD
+  static Future<Object> getMEthod({
+    required String url,
+    required Function function,
+    Map<String, String>? headers,
+  }) async {
     try {
-       log("get function:22");
-      final response = await http.get(Uri.parse(url));
+      log("get function:22");
+      final response = await http.get(Uri.parse(url), headers: headers);
+     
       log("get function:33");
 
       log("******${response.statusCode}******");
+      // log(response.body);
       if (response.statusCode == 200 || response.statusCode == 201) {
-
+        log("success");
         return Success(response: function(response.body));
       }
+      log("failures");
       return Failures(
           code: response.statusCode, responseMsg: "Invalid response");
     } on HttpException {
-      log("HELOOO ");
       return Failures(code: 101, errrorResponse: "No Internet");
     } on FormatException {
+      log('thissss error');
       return Failures(code: 102, errrorResponse: "Invalid Format");
     } on SocketException catch (e) {
       log(e.toString());

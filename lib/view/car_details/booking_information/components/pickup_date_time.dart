@@ -3,10 +3,11 @@ import 'package:provider/provider.dart';
 import 'package:rent_a_ride/utils/colors.dart';
 import 'package:rent_a_ride/utils/space.dart';
 import 'package:rent_a_ride/utils/textstyle.dart';
-import 'package:rent_a_ride/view_model/booking/booking_view_model.dart';
+import 'package:rent_a_ride/view_model/booking_view_model.dart';
 
 class PickUpDateTime extends StatelessWidget {
-  const PickUpDateTime({super.key});
+  const PickUpDateTime({super.key, required this.index});
+  final int index;
 
   @override
   Widget build(BuildContext context) {
@@ -21,11 +22,6 @@ class PickUpDateTime extends StatelessWidget {
         const SpaceWH(height: 5),
         Consumer<BookingViewModel>(
           builder: (context, value, child) {
-            // final hours = value.pickupTime!.hour.toString().padLeft(2, '0');
-            // final minutes = value.pickupTime!.minute.toString().padLeft(2, '0');
-            // final day = value.pickupDate!.day.toString();
-            // final month = value.pickupDate!.month.toString();
-            // final year = value.pickupDate!.year.toString();
             return Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -39,10 +35,6 @@ class PickUpDateTime extends StatelessWidget {
                     children: [
                       const SpaceWH(width: 3),
                       value.checkPickupDate(),
-                      // Text(
-                      //   value.checkPickupDate(),
-                      //   style: textstyle(17, FontWeight.bold, kwhite),
-                      // ),
                       IconButton(
                         onPressed: () async {
                           await value.getPickupDate(context);
@@ -65,15 +57,9 @@ class PickUpDateTime extends StatelessWidget {
                     children: [
                       const SpaceWH(width: 3),
                       value.checkPickupTime(),
-                      // Text(
-                      //   value.pickupTime == null
-                      //       ? "Time"
-                      //       : value.pickupTime!.hour.toString().padLeft(2, '0'),
-                      //   style: textstyle(17, FontWeight.bold, kwhite),
-                      // ),
                       IconButton(
                         onPressed: () async {
-                          await value.getPickupTime(context);
+                          await value.getPickupTime(context, index);
                         },
                         icon: const Icon(
                           Icons.schedule,

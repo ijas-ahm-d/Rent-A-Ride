@@ -18,8 +18,7 @@ class SplashScreen extends StatelessWidget {
 // MediaQuery
     final size = MediaQuery.of(context).size;
 // Animated SplashScreen
-    return 
-    FutureBuilder(
+    return FutureBuilder(
       future: loggedIn(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {

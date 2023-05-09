@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rent_a_ride/models/cars/cars_data_model.dart';
+import 'package:rent_a_ride/models/cars_data_model.dart';
 import 'package:rent_a_ride/utils/colors.dart';
 import 'package:rent_a_ride/utils/space.dart';
 import 'package:rent_a_ride/utils/textstyle.dart';
@@ -7,7 +7,7 @@ import 'package:rent_a_ride/utils/textstyle.dart';
 class CarSpecificationSection extends StatelessWidget {
   const CarSpecificationSection(
       {super.key, required this.carData, required this.index});
-  final List<CarDataModel> carData;
+  final List<CarsDataModel> carData;
   final int index;
 
   @override

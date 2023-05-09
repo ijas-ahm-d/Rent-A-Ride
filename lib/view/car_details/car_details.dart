@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rent_a_ride/models/cars/cars_data_model.dart';
+import 'package:rent_a_ride/models/cars_data_model.dart';
 import 'package:rent_a_ride/utils/space.dart';
 import 'package:rent_a_ride/view/car_details/booking_information/booking_information.dart';
 import 'package:rent_a_ride/view/car_details/components/car_about_section.dart';
@@ -12,7 +12,7 @@ class CarDetailsScreen extends StatelessWidget {
     required this.index,
     required this.carData,
   });
-  final List<CarDataModel> carData;
+  final List<CarsDataModel> carData;
   final int index;
 
   @override
@@ -54,6 +54,7 @@ class CarDetailsScreen extends StatelessWidget {
 
 // Booking Section
             BookingInformations(
+              index: index,
               size: size,
             ),
           ],

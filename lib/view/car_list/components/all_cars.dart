@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:rent_a_ride/models/cars/cars_data_model.dart';
+import 'package:rent_a_ride/models/cars_data_model.dart';
 import 'package:rent_a_ride/utils/textstyle.dart';
 import 'package:rent_a_ride/view/car_list/components/car_items.dart';
 
 class AllCars extends StatelessWidget {
   const AllCars({super.key, required this.carData});
-  final List<CarDataModel> carData;
+  final List<CarsDataModel> carData;
 
   @override
   Widget build(BuildContext context) {

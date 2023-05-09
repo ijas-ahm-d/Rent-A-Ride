@@ -3,10 +3,11 @@ import 'package:provider/provider.dart';
 import 'package:rent_a_ride/utils/colors.dart';
 import 'package:rent_a_ride/utils/space.dart';
 import 'package:rent_a_ride/utils/textstyle.dart';
-import 'package:rent_a_ride/view_model/booking/booking_view_model.dart';
+import 'package:rent_a_ride/view_model/booking_view_model.dart';
 
 class DropOffDateTime extends StatelessWidget {
-  const DropOffDateTime({super.key});
+  final int index;
+  const DropOffDateTime({super.key, required this.index});
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +59,7 @@ class DropOffDateTime extends StatelessWidget {
                       value.checkDropOffTime(),
                       IconButton(
                         onPressed: () async {
-                          await value.getDropOffTime(context);
+                          await value.getDropOffTime(context, index);
                         },
                         icon: const Icon(
                           Icons.schedule,
@@ -72,7 +73,6 @@ class DropOffDateTime extends StatelessWidget {
             );
           },
         ),
-        
       ],
     );
   }
