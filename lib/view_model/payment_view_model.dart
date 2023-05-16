@@ -10,6 +10,100 @@ import 'package:rent_a_ride/utils/url.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PaymentViewModel extends ChangeNotifier {
+  Future<void> pay({required String amount, required context}) async {
+    // 1.
+    await fetchPaymentIntentClientSecret(amount, context);
+    // 2.
+    await initializePaymentSheet();
+    // 3.
+
+    await confirmPayment(context);
+  }
+
+// 1==================
+  fetchPaymentIntentClientSecret(String amount, context) async {
+    final url = Urls.payment;
+    Map<String, String> headers = {
+      'Authorization': 'Bearer ${Urls.secret}',
+      'Content-Type': 'application/x-www-form-urlencoded'
+    };
+    
+    Map<String, dynamic> body = {
+      'amount': calculateAmount(amount),
+      'currency': "INR",
+      'payment_method_types[]': 'card',
+    };
+    final response = await ApiServices.postMethod(
+      context: context,
+      url: url,
+      data: body,
+      headers: headers,
+      function: paymentModelFromJson,
+    );
+    if (response is Success) {
+      if (response.response != null) {
+        _paymentModel = response.response as PaymentModel;
+      }
+    }
+    if (response is Failures) {
+      Errors errors = Errors(
+        code: response.code,
+        message: response.errrorResponse,
+      );
+      setError(errors, context);
+    }
+  }
+// 2================
+
+  Future<void> initializePaymentSheet() async {
+    const billingdetails = BillingDetails(
+      name: "John Doe",
+      email: "john.doe@example.com",
+      phone: "+919876543210",
+      address: Address(
+          city: "Mumbai",
+          country: "IN",
+          line1: "123 Main St",
+          line2: "Apartment 4B",
+          postalCode: "400001",
+          state: "Maharashtra"),
+    );
+    await Stripe.instance.initPaymentSheet(
+      paymentSheetParameters: SetupPaymentSheetParameters(
+        paymentIntentClientSecret: _paymentModel!.clientSecret,
+        billingDetails: billingdetails,
+        merchantDisplayName: "Ijas",
+        // customFlow: true,
+        style: ThemeMode.light,
+      ),
+    );
+  }
+
+// 3================
+  confirmPayment(BuildContext context) async {
+    try {
+      await Stripe.instance.presentPaymentSheet();
+
+      // ignore: use_build_context_synchronously
+      CommonSnackBAr.snackBar(
+          context: context,
+          data: "payment sucessfully completed",
+          color: specialGreen);
+    } on Exception catch (e) {
+      if (e is StripeException) {
+        log("Error from Stipe: ${e.error.localizedMessage}");
+        CommonSnackBAr.snackBar(
+            context: context,
+            data: "Error from Stipe: ${e.error.localizedMessage}",
+            color: snackbarRed);
+      } else {
+        log("Unforseen Error");
+        CommonSnackBAr.snackBar(
+            context: context, data: "Unforseen Error", color: snackbarRed);
+      }
+    }
+  }
+
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
@@ -18,9 +112,6 @@ class PaymentViewModel extends ChangeNotifier {
 
   PaymentModel? _paymentModel;
   PaymentModel? get paymentModel => _paymentModel;
-
-  // Map<String, dynamic>? _paymentIntent;
-  // Map<String, dynamic>? get paymentIntent => _paymentIntent;
 
   setError(Errors error, context) async {
     _errors = error;
@@ -38,47 +129,46 @@ class PaymentViewModel extends ChangeNotifier {
     final accessToken = prefs.getString("ACCESS_TOKEN");
     return accessToken;
   }
-  // setPaymentIntent(Map<String, dynamic>? paymentIntent) {
-  //   _paymentIntent = paymentIntent;
-  //   log("#####$paymentIntent######");
-  //   notifyListeners();
-  // }
 
   setPaymentModel(PaymentModel? paymentModel) {
     _paymentModel = paymentModel;
-    log(paymentModel!.id.toString());
     notifyListeners();
   }
 
   Future<void> payAmount(
       {required String amount,
       required BuildContext context,
-      required String bookingID}) async {
+     }) async {
     try {
-      // _paymentIntent =
+      log("1111111111111111111");
+
       await createPaymentIntent(amount: amount, context: context);
-      log(_paymentModel!.clientSecret.toString());
-      await Stripe.instance
-          .initPaymentSheet(
+
+
+      // log(_paymentModel!.clientSecret.toString());
+      const billingdetails = BillingDetails(
+      name: "John Doe",
+      email: "john.doe@example.com",
+      phone: "+919876543210",
+      address: Address(
+          city: "Mumbai",
+          country: "IN",
+          line1: "123 Main St",
+          line2: "Apartment 4B",
+          postalCode: "400001",
+          state: "Maharashtra"),
+    );
+
+      await Stripe.instance.initPaymentSheet(
         paymentSheetParameters: SetupPaymentSheetParameters(
             paymentIntentClientSecret: _paymentModel!.clientSecret,
             style: ThemeMode.dark,
-            billingDetails: const BillingDetails(
-              email: "ijas@gmail.com",
-              phone: '2929192030',
-              address: Address(
-                  city: "Calicut",
-                  country: 'india',
-                  line1: "lkansd",
-                  line2: "anidfo",
-                  postalCode: "asfina",
-                  state: "sadnfas"),
-            ),
+            billingDetails: billingdetails,
             merchantDisplayName: "Ijas"),
       )
           .then((value) {
         displayPaymentSheet(
-            amount: amount, bookingId: bookingID, context: context);
+            amount: amount,  context: context);
       });
     } catch (e) {
       log("BBBBBBBB");
@@ -104,6 +194,7 @@ class PaymentViewModel extends ChangeNotifier {
     };
     String url = Urls.payment;
     final response = await ApiServices.postMethod(
+      context: context,
       url: url,
       data: body,
       headers: headers,
@@ -116,8 +207,6 @@ class PaymentViewModel extends ChangeNotifier {
         log("--------------------------------");
         _paymentModel = response.response as PaymentModel;
         log("ppppppppppppppppppppppp");
-        // setPaymentIntent(response.response as Map<String, dynamic>);
-        // setPaymentModel(response.response as PaymentModel);
       }
     }
     if (response is Failures) {
@@ -137,14 +226,11 @@ class PaymentViewModel extends ChangeNotifier {
   displayPaymentSheet(
       {required BuildContext context,
       required String amount,
-      required String bookingId}) async {
+     }) async {
     try {
-      // await Stripe.instance.createToken();
       await Stripe.instance.presentPaymentSheet().then((value) {
-        paymentToBackend(bookingId: bookingId, totalAmount: amount);
+        // paymentToBackend(bookingId: bookingId, totalAmount: amount);
         log("!!!!!!${paymentModel!.id}");
-        log(paymentModel!.invoice.toString());
-        log(paymentModel!.transferData.toString());
         showDialog(
           context: context,
           builder: (context) {
@@ -202,31 +288,33 @@ class PaymentViewModel extends ChangeNotifier {
     );
   }
 
-  paymentToBackend({
-    required String bookingId,
-    required String totalAmount,
-  }) async {
-    log("!@#%^&$_paymentModel");
-    final url = Urls.baseUrl + Urls.user + Urls.userPayment;
-    final accessToken = await getAccessToken();
-    var headers = {"authorization": "Bearer $accessToken"};
-    Map<String, dynamic> body = {
-      "bookingId": bookingId,
-      "token": _paymentModel,
-    };
-    final response = await ApiServices.postMethod(
-      url: url,
-      data: body,
-      headers: headers,
-    );
+//   paymentToBackend({
+//     required String bookingId,
+//     required String totalAmount,
+//   }) async {
+//     log("!@#%^&$_paymentModel");
+//     final url = Urls.baseUrl + Urls.user + Urls.userPayment;
+//     final accessToken = await getAccessToken();
+//     var headers = {"authorization": "Bearer $accessToken"};
+//     log(_paymentModel!.toJson().toString());
+//     Map<String, dynamic> body = {
+//       "bookingId": bookingId,
+//       "token": _paymentModel!.toJson().toString(),
+//     };
+//     final response = await ApiServices.postMethod(
+//       url: url,
+//       data: body,
+//       headers: headers,
+//     );
 
-    if (response is Success) {
-      log(response.response.toString());
-    }
-    if (response is Failures) {
-      log(response.responseMsg.toString());
-    }
-  }
+//     if (response is Success) {
+//       log(response.response.toString());
+//     }
+//     if (response is Failures) {
+//       log(response.responseMsg.toString());
+//     }
+//   }
+// }
 }
 
 class Errors {

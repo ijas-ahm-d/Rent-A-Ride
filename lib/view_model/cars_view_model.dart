@@ -43,8 +43,9 @@ class CarsViewModel extends ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
-  setLoading(bool loading) async {
+  setLoading(bool loading) {
     _isLoading = loading;
+    log(_isLoading.toString());
     notifyListeners();
   }
 
@@ -84,8 +85,8 @@ class CarsViewModel extends ChangeNotifier {
     log("getAllCars");
     String url = Urls.baseUrl + Urls.user + Urls.showAllCars;
     final response = await ApiServices.getMEthod(
-     url:  url,
-    function:   carsDataModelFromJson,
+      url: url,
+      function: carsDataModelFromJson,
     );
     if (response is Success) {
       // log(response.response.toString());
@@ -119,11 +120,11 @@ class CarsViewModel extends ChangeNotifier {
         log("MINI CARS:${audiCars.length}");
         log("Benz CARS:${audiCars.length}");
       }
+      setLoading(false);
     }
     if (response is Failures) {
       log("cars not found");
-      await setLoading(false);
+      setLoading(false);
     }
-    setLoading(false);
   }
 }

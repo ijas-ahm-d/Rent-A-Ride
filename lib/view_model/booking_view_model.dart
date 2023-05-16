@@ -65,6 +65,7 @@ class BookingViewModel extends ChangeNotifier {
 
   setBookingDetails(BookingDetails? detailsList) {
     _bookingDetail = detailsList;
+    log(_bookingDetail!.totalAmount.toString());
     notifyListeners();
   }
 
@@ -280,6 +281,7 @@ class BookingViewModel extends ChangeNotifier {
     final accessToken = await getAccessToken();
     var headers = {"authorization": "Bearer $accessToken"};
     final response = await ApiServices.postMethod(
+      context: context,
         url: url,
         data: bookcarBody,
         headers: headers,
@@ -361,16 +363,11 @@ class BookingViewModel extends ChangeNotifier {
     );
   }
 
-
   Future<void> payment() async {
     try {} catch (error) {
       throw Exception(error);
     }
   }
-
-
-
-
 }
 
 class Errors {

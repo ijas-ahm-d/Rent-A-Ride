@@ -1,34 +1,38 @@
+
+import 'dart:convert';
+
+DriverLoginModel driverLoginModelFromJson(String str) => DriverLoginModel.fromJson(json.decode(str));
+
+String driverLoginModelToJson(DriverLoginModel data) => json.encode(data.toJson());
+
 class DriverLoginModel {
-  String? email;
-  String? password;
-  String? sId;
-  String? name;
-  String? phoneNumber;
-  String? profilePhoto;
-  String? token;
+    String? id;
+    String? name;
+    String? email;
+    String? phoneNumber;
+    String? token;
 
-  DriverLoginModel(
-      {this.email,
-      this.password,
-      this.sId,
-      this.name,
-      this.phoneNumber,
-      this.token,
-      this.profilePhoto});
+    DriverLoginModel({
+        this.id,
+        this.name,
+        this.email,
+        this.phoneNumber,
+        this.token,
+    });
 
-  DriverLoginModel.fromJson(Map<String, dynamic> json) {
-    email = json['email'];
-    password = json['password'];
-    sId = json['_id'];
-    name = json['name'];
-    profilePhoto = json['profilePhoto'];
-    phoneNumber = json['phoneNumber'];
-    token = json['token'];
-  }
-   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['email'] = email;
-    data['password'] = password;
-    return data;
-  }
+    factory DriverLoginModel.fromJson(Map<String, dynamic> json) => DriverLoginModel(
+        id: json["_id"],
+        name: json["name"],
+        email: json["email"],
+        phoneNumber: json["phoneNumber"],
+        token: json["token"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "_id": id,
+        "name": name,
+        "email": email,
+        "phoneNumber": phoneNumber,
+        "token": token,
+    };
 }

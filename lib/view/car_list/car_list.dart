@@ -6,7 +6,6 @@ import 'package:rent_a_ride/view/car_list/components/brand_selection.dart';
 
 import '../../view_model/cars_view_model.dart';
 
-TextEditingController helo = TextEditingController();
 
 class CarList extends StatelessWidget {
   const CarList({super.key});

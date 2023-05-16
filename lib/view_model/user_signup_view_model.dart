@@ -84,7 +84,7 @@ class UserSignupViewModel with ChangeNotifier {
     setLoading(true);
     String url = Urls.baseUrl + Urls.user + Urls.userSignUp;
     final response =
-        await ApiServices.postMethod(url: url, data: userDataBody());
+        await ApiServices.postMethod(url: url, data: userDataBody(),context: context);
 
     // Success
     if (response is Success) {

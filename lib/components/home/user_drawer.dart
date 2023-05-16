@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:rent_a_ride/components/drawer/about_us.dart';
 import 'package:rent_a_ride/components/drawer/bookings/user_bookings.dart';
 import 'package:rent_a_ride/components/drawer/sevices/user_services.dart';
 import 'package:rent_a_ride/utils/colors.dart';
 import 'package:rent_a_ride/utils/textstyle.dart';
 import 'package:rent_a_ride/view/splash/splash_screen.dart';
-import 'package:rent_a_ride/view_model/my_bookings_view_model.dart';
 import 'package:rent_a_ride/view_model/user_login_view_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -16,29 +16,27 @@ class UserDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final p = context.watch<MyBookingsViewModel>();
-
     final provider = context.watch<UserLoginViewModel>();
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
-          UserAccountsDrawerHeader(
-            accountName: Text(
-              provider.userName ?? "person 1",
-              style: headline5,
-            ),
-            accountEmail: Text(
-              provider.userEmail ?? "person@gmail.com",
-              style: headline3,
-            ),
-            decoration: BoxDecoration(
-              color: bodyColor,
-              image: const DecorationImage(
-                  image: AssetImage(
-                    "assets/images/carLogo.png",
-                  ),
-                  fit: BoxFit.contain),
+          SizedBox(
+            height: 150,
+            child: UserAccountsDrawerHeader(
+              accountName: Text(
+                provider.userName == null
+                    ? "person 1"
+                    : provider.userName!.toUpperCase(),
+                style: textstyle(20, FontWeight.w600, kwhite),
+              ),
+              accountEmail: Text(
+                provider.userEmail ?? "person@gmail.com",
+                style: textstyle(15, FontWeight.w600, grayText),
+              ),
+              decoration: const BoxDecoration(
+                gradient: specialCard2,
+              ),
             ),
           ),
           ListTile(
@@ -82,11 +80,12 @@ class UserDrawer extends StatelessWidget {
             ),
             title: const Text("About us"),
             onTap: () {
-              // Navigator.push(context, MaterialPageRoute(
-              //   builder: (context) {
-              //     return  Helo();
-              //   },
-              // ));
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const AboutUS(),
+                ),
+              );
             },
           ),
           ListTile(
@@ -95,7 +94,8 @@ class UserDrawer extends StatelessWidget {
               color: hashColor,
             ),
             title: const Text("Share"),
-            onTap: () {},
+            onTap: () {
+            },
           ),
           ListTile(
             leading: const Icon(
@@ -119,18 +119,51 @@ class UserDrawer extends StatelessWidget {
               color: hashColor,
             ),
             title: const Text("Log Out"),
-            onTap: () async {
-              final SharedPreferences prefs =
-                  await SharedPreferences.getInstance();
-              prefs.remove("isLoggedIn");
-              prefs.remove("USER_NAME");
-              prefs.remove("USER_EMAIL");
-              // ignore: use_build_context_synchronously
-              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+            onTap: () {
+              showDialog(
+                context: context,
                 builder: (context) {
-                  return const SplashScreen();
+                  return AlertDialog(
+                    backgroundColor: kwhite,
+                    title: Text(
+                      "Log Out",
+                      style: textstyle(14, FontWeight.bold, kBlack),
+                    ),
+                    content: const Text(
+                        "Are you sure do you want to logout the App?"),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: const Text('No'),
+                      ),
+                      TextButton(
+                        onPressed: () async {
+                          final SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+                          prefs.remove("isLoggedIn");
+                          prefs.remove("USER_NAME");
+                          prefs.remove("USER_EMAIL");
+                          // ignore: use_build_context_synchronously
+                          Navigator.pushAndRemoveUntil(context,
+                              MaterialPageRoute(
+                            builder: (context) {
+                              return const SplashScreen();
+                            },
+                          ), (route) => false);
+                        },
+                        child: const Text(
+                          'Yes',
+                          style: TextStyle(
+                            color: Colors.red,
+                          ),
+                        ),
+                      )
+                    ],
+                  );
                 },
-              ), (route) => false);
+              );
             },
           ),
         ],
@@ -138,16 +171,3 @@ class UserDrawer extends StatelessWidget {
     );
   }
 }
-
-// //GET THE user name
-// Future<String?> getUserName() async {
-//   final prefs = await SharedPreferences.getInstance();
-//   final userName = prefs.getString("USER_NAME");
-//   return userName;
-// }
-// //GET THE user Email
-// Future<String?> getUserEmail() async {
-//   final prefs = await SharedPreferences.getInstance();
-//   final userEmail = prefs.getString("USER_EMAIL");
-//   return userEmail;
-// }

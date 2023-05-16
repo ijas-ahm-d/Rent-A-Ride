@@ -11,6 +11,7 @@ import 'package:rent_a_ride/utils/textstyle.dart';
 import 'package:rent_a_ride/utils/url.dart';
 import 'package:rent_a_ride/view_model/booking_view_model.dart';
 import 'package:rent_a_ride/view_model/payment_view_model.dart';
+import 'package:rent_a_ride/view_model/payments_view_model.dart';
 // import 'package:rent_a_ride/view_model/payment_view_model.dart';
 
 class CarPaymentScreen extends StatefulWidget {
@@ -182,14 +183,52 @@ class _CarPaymentScreenState extends State<CarPaymentScreen> {
                 ),
                 onPressed: () async {
                   log('${provider.transactionId}');
-                  payment.payAmount(amount: provider.totalAmount.toString(),bookingID: provider.transactionId.toString(),context: context);
-                  // makePayment(provider.totalAmount.toString());
+// Normal with stripe payments
+                  payment.pay(
+                      amount: provider.totalAmount.toString(),
+                      context: context);
+// Stripe payment with backend call
+                  payment.payAmount(
+                      amount: provider.totalAmount.toString(),
+                      context: context);
                 },
                 child: const Text(
                   "Pay now",
                   style: TextStyle(color: blueButton),
                 ),
               ),
+            ),
+            TextButton(
+              onPressed: () async {
+                var items = [
+                  {
+                    "productPrice": 4,
+                    "productName": "Apple",
+                    "qty": 5,
+                  },
+                  {
+                    "productPrice": 5,
+                    "productName": "Pineapple",
+                    "qty": 10,
+                  },
+                ];
+                await PaymentsViewModel.stripePaymentCheckout(
+                  items,
+                  500,
+                  context,
+                  mounted,
+                  onSuccess: () {
+                    log("SUCCESS");
+                  },
+                  onCancel: () {
+                    log("CANCEL");
+                  },
+                  onError: (e) {
+                    log("ERROR:$e");
+                  },
+                );
+              },
+              child: const Text("Sample"),
             ),
           ],
         ),

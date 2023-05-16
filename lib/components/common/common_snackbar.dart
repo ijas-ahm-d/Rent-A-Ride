@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:rent_a_ride/utils/colors.dart';
 
-class CommonSnackBAr
- {
-static  snackBar({
+class CommonSnackBAr {
+  static snackBar({
     required BuildContext context,
     required String data,
     required Color color,
   }) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
+        duration: const Duration(seconds: 5),
         content: Text(
           data,
           style: const TextStyle(color: kBlack),

@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:rent_a_ride/view/splash/splash_screen.dart';
 import 'package:rent_a_ride/view_model/booking_view_model.dart';
 import 'package:rent_a_ride/view_model/cars_view_model.dart';
+import 'package:rent_a_ride/view_model/driver_view_model.dart';
 import 'package:rent_a_ride/view_model/my_bookings_view_model.dart';
 import 'package:rent_a_ride/view_model/payment_view_model.dart';
 import 'package:rent_a_ride/view_model/places_view_model.dart';
@@ -16,7 +17,8 @@ void main() async {
   // Stripe.publishableKey =
   //     "pk_test_51Mg3gFSFAwfsuLHcJkrQ5LqsAaNZjnbuQm0nVRjnRZN0qRtWcxZY1BBH18v94drHf15G2fCbTRb6PMr0f4CXmvKE00JRka5zhs";
   // Mine
-  Stripe.publishableKey = "pk_test_51N3uIVSEurDXAlrNIzE0G5gxEG7wWQXH3eCofs75Qcb4P6CTI8NZFFtuGN4JDon7BWA9IN9RT4lrkSlQhFlHihWw00FbLfPSnn";
+  Stripe.publishableKey =
+      "pk_test_51N3uIVSEurDXAlrNIzE0G5gxEG7wWQXH3eCofs75Qcb4P6CTI8NZFFtuGN4JDon7BWA9IN9RT4lrkSlQhFlHihWw00FbLfPSnn";
   runApp(const MyApp());
 }
 
@@ -49,6 +51,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => PaymentViewModel(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => DriverViewModel(),
         ),
       ],
       child: MaterialApp(

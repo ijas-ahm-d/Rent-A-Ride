@@ -1,6 +1,6 @@
 class Urls {
 //BASE URL
-// static String baseUrl = "http://192.168.189.198:7000/api";
+// static String baseUrl = "http://192.168.45.198:7000/api";
   static String baseUrl = "https://fastrack-backend.onrender.com/api";
   static String bearer = "Bearer ";
 

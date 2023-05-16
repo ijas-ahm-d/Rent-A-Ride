@@ -17,7 +17,6 @@ class CarItems extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final providerCar = context.watch<CarsViewModel>();
     return SizedBox(
       width: double.infinity,
       height: 200,
@@ -90,8 +89,8 @@ class CarItems extends StatelessWidget {
                           Row(
                             children: [
                               const Icon(
-                                Icons.attach_money,
-                                color: blueButton,
+                                Icons.currency_rupee,
+                                color: specialGreen,
                               ),
                               RichText(
                                 text: TextSpan(

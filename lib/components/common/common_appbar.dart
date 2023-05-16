@@ -15,11 +15,14 @@ class CommonAppbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: const Icon(Icons.arrow_back),),
+      leading: const BackButton(
+        color: kBlack,
+      ),
+      // leading: IconButton(
+      //     onPressed: () {
+      //       Navigator.pop(context);
+      //     },
+      //     icon: const Icon(Icons.arrow_back),),
       iconTheme: const IconThemeData(color: kBlack),
       backgroundColor: Colors.transparent,
       elevation: 0,

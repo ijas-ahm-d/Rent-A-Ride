@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:rent_a_ride/utils/colors.dart';
 import 'package:rent_a_ride/utils/space.dart';
 import 'package:rent_a_ride/utils/textstyle.dart';
+import 'package:rent_a_ride/view/driver/driver_signup.dart';
+import 'package:rent_a_ride/view_model/payment_view_model.dart';
 
 class HomeDriverAds extends StatelessWidget {
   const HomeDriverAds({
@@ -13,6 +16,8 @@ class HomeDriverAds extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final payment = context.watch<PaymentViewModel>();
+
     return Container(
       margin: const EdgeInsets.fromLTRB(20, 15, 0, 10),
       height: size.width * 0.7,
@@ -73,11 +78,24 @@ class HomeDriverAds extends StatelessWidget {
                       ),
                     ),
                     const SpaceWH(height: 5),
-                    Text("so don't be late!",
-                        style: textstyle(15, FontWeight.w500, hashColor,),),
+                    Text(
+                      "so don't be late!",
+                      style: textstyle(
+                        15,
+                        FontWeight.w500,
+                        hashColor,
+                      ),
+                    ),
                     const SpaceWH(height: 15),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const DriverSignup(),
+                          ),
+                        );
+                      },
                       child: Container(
                         height: 45,
                         width: size.width * 0.5,
@@ -110,7 +128,6 @@ class HomeDriverAds extends StatelessWidget {
                       height: 80,
                       width: 180,
                       decoration: const BoxDecoration(
-                        // color: kBlack,
                         image: DecorationImage(
                           image: AssetImage("assets/images/carOtp.png"),
                         ),
@@ -118,7 +135,7 @@ class HomeDriverAds extends StatelessWidget {
                     ),
                   ],
                 ),
-              )
+              ),
             ],
           )
         ],
