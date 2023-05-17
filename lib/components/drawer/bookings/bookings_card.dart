@@ -1,6 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'package:rent_a_ride/components/drawer/bookings/user_booking_details.dart';
 import 'package:rent_a_ride/utils/colors.dart';
@@ -131,16 +131,16 @@ class BookingCard extends StatelessWidget {
                             )
                           ],
                         ),
-                        GestureDetector(
+                        InkWell(
                           onTap: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(
-                                builder: (context) {
-                                  return UserBookingDetails(
-                                    index: index,
-                                  );
-                                },
+                              PageTransition(
+                                child: UserBookingDetails(index: index),
+                                type: PageTransitionType.bottomToTop,
+                                duration: const Duration(
+                                  milliseconds: 400,
+                                ),
                               ),
                             );
                           },

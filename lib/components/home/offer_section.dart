@@ -2,7 +2,7 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rent_a_ride/utils/colors.dart';
-import 'package:rent_a_ride/view/car_list/car_list.dart';
+import 'package:rent_a_ride/view/car_list_screen.dart';
 
 class OfferSection extends StatelessWidget {
   final List images = [
@@ -52,7 +52,7 @@ class OfferSection extends StatelessWidget {
             autoplay: true,
             itemCount: 3,
             itemBuilder: (context, index) {
-              return GestureDetector(
+              return InkWell(
                 onTap: () {
                   Navigator.push(
                     context,

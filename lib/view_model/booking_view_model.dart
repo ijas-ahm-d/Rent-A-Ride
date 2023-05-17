@@ -1,5 +1,7 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'package:rent_a_ride/components/common/common_snackbar.dart';
 import 'package:rent_a_ride/models/booking_details_model.dart';
@@ -9,7 +11,7 @@ import 'package:rent_a_ride/repo/api_status.dart';
 import 'package:rent_a_ride/utils/colors.dart';
 import 'package:rent_a_ride/utils/textstyle.dart';
 import 'package:rent_a_ride/utils/url.dart';
-import 'package:rent_a_ride/view/payment/car_payment.dart';
+import 'package:rent_a_ride/view/car_payment.dart';
 import 'package:rent_a_ride/view_model/cars_view_model.dart';
 import 'package:rent_a_ride/view_model/places_view_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -174,7 +176,8 @@ class BookingViewModel extends ChangeNotifier {
     );
     if (newPickTime != null) {
       setPickUpTime(newPickTime);
-      checkTotalAmount(context, index);
+      // checkTotalAmount(context, index);
+      getTheTotalHours(context, index);
     }
   }
 
@@ -193,9 +196,9 @@ class BookingViewModel extends ChangeNotifier {
 // SHOW PICK UP DATE
   checkPickupDate() {
     return Text(
-      pickupDate == DateTime.now()
+      _pickupDate == DateTime.now()
           ? "Date"
-          : "${pickupDate.day}/${pickupDate.month}/${pickupDate.year}",
+          : "${_pickupDate.day}/${_pickupDate.month}/${_pickupDate.year}",
       style: textstyle(17, FontWeight.bold, kwhite),
     );
   }
@@ -203,35 +206,35 @@ class BookingViewModel extends ChangeNotifier {
 // SHOW  DROP OFF DATE
   checkDropOffDate() {
     return Text(
-      dropoffDate == DateTime.now()
+      _dropoffDate == DateTime.now()
           ? "Date"
-          : "${dropoffDate.day}/${dropoffDate.month}/${dropoffDate.year}",
+          : "${_dropoffDate.day}/${_dropoffDate.month}/${_dropoffDate.year}",
       style: textstyle(17, FontWeight.bold, kwhite),
     );
   }
 
 // SHOW  PICK UP DATE
   checkPickupTime() {
-    String hour = pickupTime == TimeOfDay.now()
+    String hour = _pickupTime == TimeOfDay.now()
         ? ""
-        : pickupTime.hour.toString().padLeft(2, "0");
-    String minutes = pickupTime == TimeOfDay.now()
+        : _pickupTime.hour.toString().padLeft(2, "0");
+    String minutes = _pickupTime == TimeOfDay.now()
         ? ""
-        : pickupTime.minute.toString().padLeft(2, "0");
+        : _pickupTime.minute.toString().padLeft(2, "0");
     return Text(
-      pickupTime == TimeOfDay.now() ? "Time" : "$hour:$minutes",
+      _pickupTime == TimeOfDay.now() ? "Time" : "$hour:$minutes",
       style: textstyle(17, FontWeight.bold, kwhite),
     );
   }
 
 // SHOW  DROP OFF TIME
   checkDropOffTime() {
-    String hour = dropoffTime == TimeOfDay.now()
+    String hour = _dropoffTime == TimeOfDay.now()
         ? ""
-        : dropoffTime.hour.toString().padLeft(2, "0");
-    String minutes = dropoffTime == TimeOfDay.now()
+        : _dropoffTime.hour.toString().padLeft(2, "0");
+    String minutes = _dropoffTime == TimeOfDay.now()
         ? ""
-        : dropoffTime.minute.toString().padLeft(2, "0");
+        : _dropoffTime.minute.toString().padLeft(2, "0");
     return Text(
       dropoffTime == TimeOfDay.now() ? "Time" : "$hour:$minutes",
       style: textstyle(17, FontWeight.bold, kwhite),
@@ -281,7 +284,7 @@ class BookingViewModel extends ChangeNotifier {
     final accessToken = await getAccessToken();
     var headers = {"authorization": "Bearer $accessToken"};
     final response = await ApiServices.postMethod(
-      context: context,
+        context: context,
         url: url,
         data: bookcarBody,
         headers: headers,
@@ -291,15 +294,16 @@ class BookingViewModel extends ChangeNotifier {
       log("we are on payment section");
       if (response.response != null) {
         setBookingDetails(response.response as BookingDetails);
-
-        // clearController();
+        clearController();
         Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) {
-              return CarPaymentScreen(
-                index: index,
-              );
-            },
+          PageTransition(
+            child: CarPaymentScreen(
+              index: index,
+            ),
+            type: PageTransitionType.bottomToTop,
+            duration: const Duration(
+              milliseconds: 400,
+            ),
           ),
         );
       }
@@ -335,17 +339,17 @@ class BookingViewModel extends ChangeNotifier {
     return body.toJson();
   }
 
-  // clearController() {
-  //   _pickDateTime = DateTime.now();
-  //   _dropDateTime = DateTime.now();
-  //   _dropoffDate = DateTime.now();
-  //   _dropDateTime = DateTime.now();
-  //   _pickupDate = DateTime.now();
-  //   _pickupTime = TimeOfDay.now();
-  //   _isDriverRequired = false;
-  //   _totalAmount = 0;
-  //   _totalHours = 0;
-  // }
+  clearController() {
+    _pickDateTime = DateTime.now();
+    _dropDateTime = DateTime.now();
+    _dropoffDate = DateTime.now();
+    _dropDateTime = DateTime.now();
+    _pickupDate = DateTime.now();
+    _pickupTime = TimeOfDay.now();
+    _isDriverRequired = false;
+    _totalAmount = 0;
+    _totalHours = 0;
+  }
 
   errorResponses(Errors error, BuildContext context) {
     final statusCode = error.code;

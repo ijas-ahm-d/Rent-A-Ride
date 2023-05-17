@@ -58,13 +58,12 @@ class MyBookingsViewModel extends ChangeNotifier {
         log("My bookings success");
         setBookingListData(response.response as List<MyBookingsModel>);
       }
+      setLoading(false);
     }
     if (response is Failures) {
+      setLoading(false);
       log(response.errrorResponse.toString());
       log("My bookings asjhdvj,hv");
-      await setLoading(false);
     }
-
-    setLoading(false);
   }
 }

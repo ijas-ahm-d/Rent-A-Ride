@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'package:rent_a_ride/components/drawer/about_us.dart';
 import 'package:rent_a_ride/components/drawer/bookings/user_bookings.dart';
 import 'package:rent_a_ride/components/drawer/sevices/user_services.dart';
+import 'package:rent_a_ride/components/drawer/share_app.dart';
+import 'package:rent_a_ride/components/drawer/terms_and_conditon.dart';
 import 'package:rent_a_ride/utils/colors.dart';
 import 'package:rent_a_ride/utils/textstyle.dart';
-import 'package:rent_a_ride/view/splash/splash_screen.dart';
+import 'package:rent_a_ride/view/splash_screen.dart';
 import 'package:rent_a_ride/view_model/user_login_view_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -17,6 +20,7 @@ class UserDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final provider = context.watch<UserLoginViewModel>();
+    final navigator = Navigator.of(context);
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
@@ -26,7 +30,7 @@ class UserDrawer extends StatelessWidget {
             child: UserAccountsDrawerHeader(
               accountName: Text(
                 provider.userName == null
-                    ? "person 1"
+                    ? "person"
                     : provider.userName!.toUpperCase(),
                 style: textstyle(20, FontWeight.w600, kwhite),
               ),
@@ -46,12 +50,13 @@ class UserDrawer extends StatelessWidget {
             ),
             title: const Text("My Bookings"),
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return const UserBookings();
-                  },
+              navigator.push(
+                PageTransition(
+                  type: PageTransitionType.leftToRight,
+                  duration: const Duration(
+                    milliseconds: 300,
+                  ),
+                  child: const UserBookings(),
                 ),
               );
             },
@@ -63,12 +68,13 @@ class UserDrawer extends StatelessWidget {
             ),
             title: const Text("Popular Services"),
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return const UserServices();
-                  },
+              navigator.push(
+                PageTransition(
+                  duration: const Duration(
+                    milliseconds: 300,
+                  ),
+                  type: PageTransitionType.leftToRight,
+                  child: const UserServices(),
                 ),
               );
             },
@@ -80,10 +86,13 @@ class UserDrawer extends StatelessWidget {
             ),
             title: const Text("About us"),
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const AboutUS(),
+              navigator.push(
+                PageTransition(
+                  duration: const Duration(
+                    milliseconds: 300,
+                  ),
+                  type: PageTransitionType.leftToRight,
+                  child: const AboutUS(),
                 ),
               );
             },
@@ -95,23 +104,34 @@ class UserDrawer extends StatelessWidget {
             ),
             title: const Text("Share"),
             onTap: () {
+              shareAppFile(context);
             },
           ),
-          ListTile(
-            leading: const Icon(
-              Icons.policy,
-              color: hashColor,
-            ),
-            title: const Text("Privacy policy"),
-            onTap: () {},
-          ),
+          // ListTile(
+          //   leading: const Icon(
+          //     Icons.policy,
+          //     color: hashColor,
+          //   ),
+          //   title: const Text("Privacy policy"),
+          //   onTap: () {},
+          // ),
           ListTile(
             leading: const Icon(
               Icons.my_library_books,
               color: hashColor,
             ),
             title: const Text("Terms and Conditions"),
-            onTap: () {},
+            onTap: () {
+              navigator.push(
+                PageTransition(
+                  type: PageTransitionType.leftToRight,
+                  duration: const Duration(
+                    milliseconds: 300,
+                  ),
+                  child: const TermsAndCondition(),
+                ),
+              );
+            },
           ),
           ListTile(
             leading: const Icon(
@@ -146,12 +166,12 @@ class UserDrawer extends StatelessWidget {
                           prefs.remove("USER_NAME");
                           prefs.remove("USER_EMAIL");
                           // ignore: use_build_context_synchronously
-                          Navigator.pushAndRemoveUntil(context,
-                              MaterialPageRoute(
-                            builder: (context) {
-                              return const SplashScreen();
-                            },
-                          ), (route) => false);
+                          navigator.pushAndRemoveUntil(
+                              PageTransition(
+                                type: PageTransitionType.topToBottom,
+                                child: const SplashScreen(),
+                              ),
+                              (route) => false);
                         },
                         child: const Text(
                           'Yes',

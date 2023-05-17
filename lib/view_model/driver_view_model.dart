@@ -9,8 +9,8 @@ import 'package:rent_a_ride/repo/api_services.dart';
 import 'package:rent_a_ride/repo/api_status.dart';
 import 'package:rent_a_ride/utils/colors.dart';
 import 'package:rent_a_ride/utils/url.dart';
-import 'package:rent_a_ride/view/driver/driver_screen.dart';
-import 'package:rent_a_ride/view/home/home_screen.dart';
+import 'package:rent_a_ride/view/driver_screen.dart';
+import 'package:rent_a_ride/view/home_screen.dart';
 import 'package:rent_a_ride/view_model/user_login_view_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

@@ -8,8 +8,8 @@ import 'package:rent_a_ride/repo/api_services.dart';
 import 'package:rent_a_ride/repo/api_status.dart';
 import 'package:rent_a_ride/utils/colors.dart';
 import 'package:rent_a_ride/utils/url.dart';
-import 'package:rent_a_ride/view/home/home_screen.dart';
-import 'package:rent_a_ride/view/otp/otp_screen.dart';
+import 'package:rent_a_ride/view/home_screen.dart';
+import 'package:rent_a_ride/view/otp_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserSignupViewModel with ChangeNotifier {

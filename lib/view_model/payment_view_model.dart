@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
@@ -7,6 +8,7 @@ import 'package:rent_a_ride/repo/api_services.dart';
 import 'package:rent_a_ride/repo/api_status.dart';
 import 'package:rent_a_ride/utils/colors.dart';
 import 'package:rent_a_ride/utils/url.dart';
+import 'package:rent_a_ride/view/home_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PaymentViewModel extends ChangeNotifier {
@@ -16,7 +18,6 @@ class PaymentViewModel extends ChangeNotifier {
     // 2.
     await initializePaymentSheet();
     // 3.
-
     await confirmPayment(context);
   }
 
@@ -27,7 +28,7 @@ class PaymentViewModel extends ChangeNotifier {
       'Authorization': 'Bearer ${Urls.secret}',
       'Content-Type': 'application/x-www-form-urlencoded'
     };
-    
+
     Map<String, dynamic> body = {
       'amount': calculateAmount(amount),
       'currency': "INR",
@@ -68,6 +69,8 @@ class PaymentViewModel extends ChangeNotifier {
           postalCode: "400001",
           state: "Maharashtra"),
     );
+
+
     await Stripe.instance.initPaymentSheet(
       paymentSheetParameters: SetupPaymentSheetParameters(
         paymentIntentClientSecret: _paymentModel!.clientSecret,
@@ -84,6 +87,13 @@ class PaymentViewModel extends ChangeNotifier {
     try {
       await Stripe.instance.presentPaymentSheet();
 
+      // ignore: use_build_context_synchronously
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const HomeScreen(),
+          ),
+          (route) => false);
       // ignore: use_build_context_synchronously
       CommonSnackBAr.snackBar(
           context: context,
@@ -103,15 +113,6 @@ class PaymentViewModel extends ChangeNotifier {
       }
     }
   }
-
-  bool _isLoading = false;
-  bool get isLoading => _isLoading;
-
-  Errors? _errors;
-  Errors? get errors => _errors;
-
-  PaymentModel? _paymentModel;
-  PaymentModel? get paymentModel => _paymentModel;
 
   setError(Errors error, context) async {
     _errors = error;
@@ -135,31 +136,32 @@ class PaymentViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> payAmount(
-      {required String amount,
-      required BuildContext context,
-     }) async {
+  Future<void> payAmount({
+    required String amount,
+    required String bookingId,
+    required BuildContext context,
+  }) async {
     try {
       log("1111111111111111111");
 
       await createPaymentIntent(amount: amount, context: context);
 
-
       // log(_paymentModel!.clientSecret.toString());
       const billingdetails = BillingDetails(
-      name: "John Doe",
-      email: "john.doe@example.com",
-      phone: "+919876543210",
-      address: Address(
-          city: "Mumbai",
-          country: "IN",
-          line1: "123 Main St",
-          line2: "Apartment 4B",
-          postalCode: "400001",
-          state: "Maharashtra"),
-    );
+        name: "John Doe",
+        email: "john.doe@example.com",
+        phone: "+919876543210",
+        address: Address(
+            city: "Mumbai",
+            country: "IN",
+            line1: "123 Main St",
+            line2: "Apartment 4B",
+            postalCode: "400001",
+            state: "Maharashtra"),
+      );
 
-      await Stripe.instance.initPaymentSheet(
+      await Stripe.instance
+          .initPaymentSheet(
         paymentSheetParameters: SetupPaymentSheetParameters(
             paymentIntentClientSecret: _paymentModel!.clientSecret,
             style: ThemeMode.dark,
@@ -168,7 +170,7 @@ class PaymentViewModel extends ChangeNotifier {
       )
           .then((value) {
         displayPaymentSheet(
-            amount: amount,  context: context);
+            amount: amount, context: context, bookingId: bookingId);
       });
     } catch (e) {
       log("BBBBBBBB");
@@ -226,32 +228,12 @@ class PaymentViewModel extends ChangeNotifier {
   displayPaymentSheet(
       {required BuildContext context,
       required String amount,
-     }) async {
+      required String bookingId}) async {
     try {
       await Stripe.instance.presentPaymentSheet().then((value) {
-        // paymentToBackend(bookingId: bookingId, totalAmount: amount);
-        log("!!!!!!${paymentModel!.id}");
-        showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              content: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Row(
-                    children: const [
-                      Icon(
-                        Icons.check_circle,
-                        color: Colors.green,
-                      ),
-                      Text("Payment Successfull"),
-                    ],
-                  ),
-                ],
-              ),
-            );
-          },
-        );
+        paymentToBackend(
+            bookingId: bookingId, totalAmount: amount, context: context);
+
         // _paymentModel = null;
       }).onError((error, stackTrace) {
         log("Error is :---> $error $stackTrace");
@@ -274,6 +256,15 @@ class PaymentViewModel extends ChangeNotifier {
     return calculatedAmount.toString();
   }
 
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
+
+  Errors? _errors;
+  Errors? get errors => _errors;
+
+  PaymentModel? _paymentModel;
+  PaymentModel? get paymentModel => _paymentModel;
+
   errorResponses(Errors error, BuildContext context) {
     final statusCode = error.code;
 
@@ -288,33 +279,54 @@ class PaymentViewModel extends ChangeNotifier {
     );
   }
 
-//   paymentToBackend({
-//     required String bookingId,
-//     required String totalAmount,
-//   }) async {
-//     log("!@#%^&$_paymentModel");
-//     final url = Urls.baseUrl + Urls.user + Urls.userPayment;
-//     final accessToken = await getAccessToken();
-//     var headers = {"authorization": "Bearer $accessToken"};
-//     log(_paymentModel!.toJson().toString());
-//     Map<String, dynamic> body = {
-//       "bookingId": bookingId,
-//       "token": _paymentModel!.toJson().toString(),
-//     };
-//     final response = await ApiServices.postMethod(
-//       url: url,
-//       data: body,
-//       headers: headers,
-//     );
+  paymentToBackend(
+      {required String bookingId,
+      required String totalAmount,
+      required context}) async {
+    log("!@#%^&$_paymentModel");
+    final url = Urls.baseUrl + Urls.user + Urls.userPayment;
+    final accessToken = await getAccessToken();
+    var headers = {"authorization": "Bearer $accessToken"};
+    log(_paymentModel!.toJson().toString());
+    Map<String, dynamic> body = {
+      "bookingId": bookingId,
+      "token": _paymentModel!.toJson().toString(),
+    };
+    final response = await ApiServices.postMethod(
+      context: context,
+      url: url,
+      data: body,
+      headers: headers,
+    );
 
-//     if (response is Success) {
-//       log(response.response.toString());
-//     }
-//     if (response is Failures) {
-//       log(response.responseMsg.toString());
-//     }
-//   }
-// }
+    if (response is Success) {
+      log(response.response.toString());
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  children: const [
+                    Icon(
+                      Icons.check_circle,
+                      color: Colors.green,
+                    ),
+                    Text("Payment Successfull"),
+                  ],
+                ),
+              ],
+            ),
+          );
+        },
+      );
+    }
+    if (response is Failures) {
+      log(response.responseMsg.toString());
+    }
+  }
 }
 
 class Errors {

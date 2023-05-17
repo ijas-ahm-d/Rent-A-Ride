@@ -12,10 +12,13 @@ class UserServices extends StatelessWidget {
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
-      backgroundColor: const Color.fromARGB(210, 255, 255, 255),
+      backgroundColor: bodyColor,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(size.height * 0.07),
-        child: const CommonAppbar(title: "Our Services"),
+        child: const CommonAppbar(
+          title: "Our Services",
+          txtClr: kwhite,
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(

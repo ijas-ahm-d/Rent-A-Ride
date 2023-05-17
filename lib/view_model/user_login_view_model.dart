@@ -1,5 +1,3 @@
-// import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:rent_a_ride/components/common/common_snackbar.dart';
 import 'package:rent_a_ride/models/user_login_model.dart';
@@ -7,14 +5,13 @@ import 'package:rent_a_ride/repo/api_services.dart';
 import 'package:rent_a_ride/repo/api_status.dart';
 import 'package:rent_a_ride/utils/colors.dart';
 import 'package:rent_a_ride/utils/url.dart';
-import 'package:rent_a_ride/view/home/home_screen.dart';
+import 'package:rent_a_ride/view/home_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserLoginViewModel with ChangeNotifier {
   UserLoginViewModel() {
     getUserDetails();
   }
-
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
@@ -39,6 +36,16 @@ class UserLoginViewModel with ChangeNotifier {
 // Function for password visibility
   showPassword() {
     _passwordVisibility = !passwordVisibility;
+    notifyListeners();
+  }
+
+  getUserName(String? usrName) {
+    _userName = usrName;
+    notifyListeners();
+  }
+
+  getUserEmail(String? usrEmail) {
+    _userEmail = usrEmail;
     notifyListeners();
   }
 
@@ -127,9 +134,10 @@ class UserLoginViewModel with ChangeNotifier {
 //GET THE UserName and email
   getUserDetails() async {
     final prefs = await SharedPreferences.getInstance();
-    _userName = prefs.getString("USER_NAME");
-    _userEmail = prefs.getString("USER_EMAIL");
-    notifyListeners();
+    final name = prefs.getString("USER_NAME");
+    final email = prefs.getString("USER_EMAIL");
+    getUserName(name);
+    getUserEmail(email);
   }
 
   // The body to pass in the method

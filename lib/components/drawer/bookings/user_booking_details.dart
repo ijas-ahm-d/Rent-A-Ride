@@ -30,18 +30,15 @@ class UserBookingDetails extends StatelessWidget {
         backgroundColor: const Color.fromARGB(255, 0, 49, 92),
         elevation: 0,
         title: Text(
-          "BOOKING DETAILS",
+          "Booking Details",
           style: textstyle(
             17,
             FontWeight.bold,
             kwhite,
           ),
         ),
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: const Icon(Icons.arrow_back),
+        leading: const BackButton(
+          color: kwhite,
         ),
       ),
       body: SingleChildScrollView(

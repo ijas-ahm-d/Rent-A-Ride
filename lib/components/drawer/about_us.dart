@@ -12,10 +12,13 @@ class AboutUS extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: const Color.fromARGB(210, 255, 255, 255),
+      backgroundColor: bodyColor,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(size.height * 0.07),
-        child: const CommonAppbar(title: "About Us"),
+        child: const CommonAppbar(
+          title: "About Us",
+          txtClr: kwhite,
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 28.0, vertical: 8),
@@ -38,7 +41,7 @@ class AboutUS extends StatelessWidget {
               child: Center(
                 child: Text(
                   "Welcome To RENT_A_RIDE",
-                  style: textstyle(17, FontWeight.bold, kBlack),
+                  style: textstyle(17, FontWeight.bold, kwhite),
                 ),
               ),
             ),
@@ -59,7 +62,7 @@ class AboutUS extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Text(
                 "We are Committed To Provide Safe Ride Solutions",
-                style: textstyle(14, FontWeight.w600, kBlack),
+                style: textstyle(14, FontWeight.w600, kwhite),
               ),
             ),
             Text(
@@ -88,7 +91,7 @@ class AboutUS extends StatelessWidget {
                     ),
                     Text(
                       "CONTACT US",
-                      style: textstyle(14, FontWeight.w500, kBlack),
+                      style: textstyle(14, FontWeight.w500, kwhite),
                     )
                   ],
                 ))

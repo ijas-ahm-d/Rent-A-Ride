@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:rent_a_ride/utils/colors.dart';
 import 'package:rent_a_ride/utils/space.dart';
 import 'package:rent_a_ride/utils/textstyle.dart';
-import 'package:rent_a_ride/view/driver/driver_signup.dart';
-import 'package:rent_a_ride/view_model/payment_view_model.dart';
+import 'package:rent_a_ride/view/driver_signup.dart';
+
 
 class HomeDriverAds extends StatelessWidget {
   const HomeDriverAds({
@@ -16,7 +15,6 @@ class HomeDriverAds extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final payment = context.watch<PaymentViewModel>();
 
     return Container(
       margin: const EdgeInsets.fromLTRB(20, 15, 0, 10),
@@ -124,6 +122,20 @@ class HomeDriverAds extends StatelessWidget {
                         ),
                       ),
                     ),
+                    // CommonButton(
+                    //   onTap: () {
+                    //     p.pay(amount: "100", context: context);
+                    //   },
+                    //   color: blueButton,
+                    //   child: const Text("Test 1"),
+                    // ),
+                    // CommonButton(
+                    //   onTap: () {
+                    //     s.payAmount(context, "1000");
+                    //   },
+                    //   color: blueButton,
+                    //   child: const Text("Test 2"),
+                    // ),
                     Container(
                       height: 80,
                       width: 180,
