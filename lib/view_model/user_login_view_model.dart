@@ -55,7 +55,7 @@ class UserLoginViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<UserLoginModel?> setUserData(UserLoginModel userData) async {
+  Future<UserLoginModel?>  setUserData(UserLoginModel userData) async {
     _userData = userData;
     return _userData;
   }

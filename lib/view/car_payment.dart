@@ -1,17 +1,11 @@
-import 'dart:convert';
 import 'dart:developer';
-import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:intl/intl.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'package:rent_a_ride/components/common/common_button.dart';
 import 'package:rent_a_ride/utils/colors.dart';
 import 'package:rent_a_ride/utils/space.dart';
 import 'package:rent_a_ride/utils/textstyle.dart';
-import 'package:rent_a_ride/utils/url.dart';
-import 'package:rent_a_ride/view/car_details_screen.dart';
 import 'package:rent_a_ride/view_model/booking_view_model.dart';
 import 'package:rent_a_ride/view_model/payment_view_model.dart';
 
