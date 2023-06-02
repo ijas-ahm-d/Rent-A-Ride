@@ -96,9 +96,9 @@ class LoginScreen extends StatelessWidget {
                                     size: size),
                               ),
                               //*****------------ FORGET PASSWORD ----------------*****//
-                              Row(
+                            const  Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
-                                children: const [
+                                children:  [
                                   Text("forget your password?",
                                       style: headline3),
                                   SpaceWH(

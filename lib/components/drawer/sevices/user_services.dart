@@ -20,9 +20,9 @@ class UserServices extends StatelessWidget {
           txtClr: kwhite,
         ),
       ),
-      body: SingleChildScrollView(
+      body:const  SingleChildScrollView(
         child: Column(
-          children: const [
+          children:  [
             ServiceCard(
               content:
                   'City Transfer has been providing general freight transportation services for over 75 years with founding roots back to 1945 and ownership in its third generation.',

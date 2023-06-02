@@ -55,10 +55,10 @@ class LoadingCard extends StatelessWidget {
                   const SpaceWH(height: 10),
                 ],
               ),
-              Column(
+              const Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.end,
-                children: const [
+                children: [
                   SpaceWH(height: 20),
                   CommonShimmer.rectangular(
                     height: 20,

@@ -304,12 +304,12 @@ class PaymentViewModel extends ChangeNotifier {
       showDialog(
         context: context,
         builder: (context) {
-          return AlertDialog(
+          return const AlertDialog(
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Row(
-                  children: const [
+                  children:  [
                     Icon(
                       Icons.check_circle,
                       color: Colors.green,

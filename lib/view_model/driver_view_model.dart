@@ -189,6 +189,7 @@ class DriverViewModel with ChangeNotifier {
       "driverLicenceFront": license1URL,
       "drivingLicenceRear": license2URL,
     };
+  
     final response =
         await ApiServices.postMethod(url: url, data: body, context: context);
     if (response is Success) {
