@@ -8,10 +8,11 @@ import 'package:rent_a_ride/utils/space.dart';
 import 'package:rent_a_ride/view/driver_signup.dart';
 import 'package:rent_a_ride/view_model/driver_view_model.dart';
 
-GlobalKey<FormState> driverLoginForm = GlobalKey<FormState>();
+
 
 class DriverLogin extends StatelessWidget {
-  const DriverLogin({super.key});
+   DriverLogin({super.key});
+  final _driverformkey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -46,10 +47,10 @@ class DriverLogin extends StatelessWidget {
           }
         },
         child: Form(
-          key: driverLoginForm,
+          key: _driverformkey,
           child: Padding(
             padding: const EdgeInsets.all(25.0),
-            child: Column(
+            child: ListView(
               children: [
                 const SpaceWH(height: 20),
                 CommonTextField(
@@ -83,7 +84,7 @@ class DriverLogin extends StatelessWidget {
                           "Login",
                         ),
                         onTap: () {
-                          if (driverLoginForm.currentState!.validate()) {
+                          if (_driverformkey.currentState!.validate()) {
                             provider.driverLoginService(context);
                           }
                         },

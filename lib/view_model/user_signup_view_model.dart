@@ -32,9 +32,6 @@ class UserSignupViewModel with ChangeNotifier {
   bool get isOtpLoading => _isOtpLoading;
 // ****************
 
-  // UserSignUpModel? _userData;
-  // UserSignUpModel get userData => _userData!;
-
   UserOtpModel? _userOtpData;
   UserOtpModel get userOtpData => _userOtpData!;
 

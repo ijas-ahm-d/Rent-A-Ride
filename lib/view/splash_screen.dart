@@ -29,7 +29,7 @@ class SplashScreen extends StatelessWidget {
           );
         }
         return AnimatedSplashScreen(
-          backgroundColor: blackBG,
+          backgroundColor: kwhite,
           splashIconSize: double.infinity,
           duration: 3000,
           splash: Column(

@@ -28,7 +28,8 @@ class CarList extends StatelessWidget {
                       margin: const EdgeInsets.symmetric(
                           horizontal: 25, vertical: 5),
                       child: const LoadingCard()))
-              : AllCars(
+              :
+               AllCars(
                   carData: providerCar.currentBrandIndex == 0
                       ? providerCar.carsDataList
                       : providerCar.currentBrandIndex == 1

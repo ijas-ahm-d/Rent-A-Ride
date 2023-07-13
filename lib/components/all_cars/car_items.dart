@@ -18,6 +18,8 @@ class CarItems extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+   
+
     return SizedBox(
       width: double.infinity,
       height: 200,
@@ -54,14 +56,18 @@ class CarItems extends StatelessWidget {
                           height: 20,
                         ),
                         Text(
-                          carData[index].name.toString().toUpperCase(),
+                          carData[index].name!.isEmpty
+                              ? "CAR"
+                              : carData[index].name.toString().toUpperCase(),
                           style: GoogleFonts.montserrat(
                             fontSize: 20,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
                         Text(
-                          carData[index].model.toString(),
+                          carData[index].model!.isEmpty
+                              ? "Model"
+                              : carData[index].model.toString(),
                           style: GoogleFonts.montserrat(
                               fontSize: 18,
                               fontWeight: FontWeight.w500,
@@ -83,7 +89,9 @@ class CarItems extends StatelessWidget {
                                 color: snackbarRed,
                               ),
                               Text(
-                                carData[index].place.toString(),
+                                carData[index].place!.isEmpty
+                                    ? "Place"
+                                    : carData[index].place.toString(),
                               )
                             ],
                           ),

@@ -19,11 +19,11 @@ class OtpScreen extends StatelessWidget {
 
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: blackBG,
+      backgroundColor: kwhite,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: providerValue.isLoading
+          child: providerValue.isOtpLoading
               ? Center(
                   child: Lottie.asset(
                     "assets/lottie/splashCar.json",
@@ -82,10 +82,9 @@ class OtpScreen extends StatelessWidget {
                               width: 60,
                               height: 60,
                               textStyle: GoogleFonts.poppins(
-                                  fontSize: 20, color: kwhite),
+                                  fontSize: 20, color: kBlack),
                               decoration: BoxDecoration(
-                                color:
-                                    const Color.fromRGBO(232, 235, 241, 0.37),
+                                color:const Color.fromARGB(232, 232, 235, 241),
                                 borderRadius: BorderRadius.circular(24),
                               ),
                             ),
@@ -93,9 +92,8 @@ class OtpScreen extends StatelessWidget {
                               width: 60,
                               height: 60,
                               textStyle: GoogleFonts.poppins(
-                                fontSize: 20,
-                                color: const Color.fromRGBO(70, 69, 66, 1),
-                              ),
+                                  fontSize: 20, color: kBlack
+                                  ),
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(8),

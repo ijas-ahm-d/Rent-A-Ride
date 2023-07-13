@@ -49,6 +49,9 @@ class DriverViewModel with ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
+  bool _isLoading2 = false;
+  bool get isLoading2 => _isLoading2;
+
   File? _driverImage;
   File? get driverImage => _driverImage;
 
@@ -72,8 +75,13 @@ class DriverViewModel with ChangeNotifier {
     return _driverData;
   }
 
-  setLoading(bool loading) async {
+  setLoading(bool loading) {
     _isLoading = loading;
+    notifyListeners();
+  }
+
+  setLoading2(bool loading2) {
+    _isLoading2 = loading2;
     notifyListeners();
   }
 
@@ -189,7 +197,7 @@ class DriverViewModel with ChangeNotifier {
       "driverLicenceFront": license1URL,
       "drivingLicenceRear": license2URL,
     };
-  
+
     final response =
         await ApiServices.postMethod(url: url, data: body, context: context);
     if (response is Success) {
@@ -209,7 +217,7 @@ class DriverViewModel with ChangeNotifier {
       clearController();
     }
     if (response is Failures) {
-      setLoading(false);
+      
 
       CommonSnackBAr.snackBar(
         context: context,
@@ -217,11 +225,12 @@ class DriverViewModel with ChangeNotifier {
         color: snackbarRed,
       );
     }
+    setLoading(false);
   }
 
   driverLoginService(context) async {
     final navigator = Navigator.of(context);
-    setLoading(true);
+    setLoading2(true);
     String url = Urls.baseUrl + Urls.driver + Urls.driverLogIn;
     final body = {
       "email": loginEmailcntrlr.text.trim(),
@@ -246,8 +255,9 @@ class DriverViewModel with ChangeNotifier {
       ), (route) => false);
     }
     if (response is Failures) {
+      setLoading2(false);
       log("^^^^^^^^^${response.code}^^^^^^^^");
-      setLoading(false);
+      
       // setLoginError(loginError!, context);
       if (response.code == 500) {
         CommonSnackBAr.snackBar(
@@ -257,7 +267,7 @@ class DriverViewModel with ChangeNotifier {
         );
       }
     }
-    setLoading(false);
+    setLoading2(false);
   }
 
   setDriverStatus({

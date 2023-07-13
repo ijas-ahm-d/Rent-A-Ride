@@ -31,12 +31,23 @@ class UserBookings extends StatelessWidget {
               margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
               child: const LoadingCard(),
             )
-          : ListView.builder(
-              itemCount: provider.bookingList.length,
-              itemBuilder: (context, index) {
-                return BookingCard(index: index);
-              },
-            ),
+          : provider.bookingList.isEmpty
+              ? Center(
+                  child: Container(
+                    padding:const EdgeInsets.all(10),
+                    color: kBlack,
+                    child: Text(
+                      "There is No Bookings Yet",
+                      style: textstyle(15, FontWeight.w500, kwhite),
+                    ),
+                  ),
+                )
+              : ListView.builder(
+                  itemCount: provider.bookingList.length,
+                  itemBuilder: (context, index) {
+                    return BookingCard(index: index);
+                  },
+                ),
     );
   }
 }

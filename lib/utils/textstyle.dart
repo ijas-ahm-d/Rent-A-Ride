@@ -18,7 +18,7 @@ TextStyle homeHead(size) {
 final headline = GoogleFonts.truculenta(
   fontSize: 35,
   letterSpacing: 3,
-  color: kwhite,
+  color: kBlack,
   fontWeight: FontWeight.bold,
 );
 
@@ -64,7 +64,7 @@ const hintStyle = TextStyle(
 );
 
 final splashHead = GoogleFonts.truculenta(
-  color: kwhite,
+  color: kBlack,
   fontWeight: FontWeight.w700,
   letterSpacing: 16,
   fontSize: 30,

@@ -63,7 +63,7 @@ class MyBookingsViewModel extends ChangeNotifier {
     if (response is Failures) {
       setLoading(false);
       log(response.errrorResponse.toString());
-      log("My bookings asjhdvj,hv");
+      log("My bookings is not getting");
     }
   }
 }

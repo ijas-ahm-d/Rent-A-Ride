@@ -18,7 +18,7 @@ class SignUpScreen extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     final providerValue = context.watch<UserSignupViewModel>();
     return Scaffold(
-      backgroundColor: blackBG,
+      backgroundColor: kwhite,
       body: providerValue.isLoading
           ? Center(
               child: Lottie.asset(
@@ -152,7 +152,7 @@ class SignUpScreen extends StatelessWidget {
                         height: size.width * 0.45,
                         child: Image.asset(
                           signupImage,
-                          color: kwhite,
+                          color: kBlack,
                         )),
 
                     Row(
@@ -160,7 +160,7 @@ class SignUpScreen extends StatelessWidget {
                       children: [
                         const Text(
                           "already have an account?",
-                          style: TextStyle(color: kwhite),
+                          style: TextStyle(color: kBlack),
                         ),
                         TextButton(
                           onPressed: () {
