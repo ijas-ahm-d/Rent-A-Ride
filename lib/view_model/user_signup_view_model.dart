@@ -194,7 +194,7 @@ class UserSignupViewModel with ChangeNotifier {
     await status.setString("USER_EMAIL", userEmail);
   }
 
-  clearControllers(context) {
+  clearControllers() {
     otpController1.clear();
     nameController.clear();
     emailController.clear();
@@ -204,7 +204,7 @@ class UserSignupViewModel with ChangeNotifier {
 
   otpButton(context) async {
     await getOtpStatus(context);
-    clearControllers(context);
+    clearControllers();
   }
 
 // *************

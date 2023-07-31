@@ -12,14 +12,13 @@ import 'package:rent_a_ride/view_model/cars_view_model.dart';
 class AvailableCars extends StatelessWidget {
   const AvailableCars({
     super.key,
-    required this.size,
   });
-
-  final Size size;
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     final providerCar = context.watch<CarsViewModel>();
+
     return Container(
       margin: const EdgeInsets.fromLTRB(20, 15, 0, 10),
       child: Column(

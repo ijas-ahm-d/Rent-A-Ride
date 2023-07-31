@@ -4,18 +4,17 @@ import 'package:rent_a_ride/utils/space.dart';
 import 'package:rent_a_ride/utils/textstyle.dart';
 import 'package:rent_a_ride/view/driver_signup.dart';
 
-
 class HomeDriverAds extends StatelessWidget {
   const HomeDriverAds({
     super.key,
-    required this.size,
+
   });
 
-  final Size size;
+ 
 
   @override
   Widget build(BuildContext context) {
-
+    final size = MediaQuery.of(context).size;
     return Container(
       margin: const EdgeInsets.fromLTRB(20, 15, 0, 10),
       height: size.width * 0.7,

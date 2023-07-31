@@ -23,13 +23,11 @@ class OfferSection extends StatelessWidget {
   ];
   OfferSection({
     super.key,
-    required this.size,
   });
-
-  final Size size;
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Stack(
       children: [
         Container(

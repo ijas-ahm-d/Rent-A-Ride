@@ -9,9 +9,9 @@ import 'package:rent_a_ride/view/home_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserLoginViewModel with ChangeNotifier {
-  UserLoginViewModel() {
-    getUserDetails();
-  }
+  // UserLoginViewModel() {
+  //   getUserDetails();
+  // }
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 

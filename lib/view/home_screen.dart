@@ -13,8 +13,8 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     final provider = context.watch<UserLoginViewModel>();
+    provider.getUserDetails();
 
     return Scaffold(
       backgroundColor: kwhite,
@@ -44,9 +44,9 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            OfferSection(size: size),
-            AvailableCars(size: size),
-            HomeDriverAds(size: size)
+            OfferSection(),
+           const AvailableCars(),
+          const  HomeDriverAds()
           ],
         ),
       ),
