@@ -14,6 +14,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final provider = context.watch<UserLoginViewModel>();
+  
     provider.getUserDetails();
 
     return Scaffold(
@@ -45,8 +46,8 @@ class HomeScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             OfferSection(),
-           const AvailableCars(),
-          const  HomeDriverAds()
+            const AvailableCars(),
+            const HomeDriverAds()
           ],
         ),
       ),
