@@ -41,9 +41,10 @@ class PaymentViewModel extends ChangeNotifier {
       headers: headers,
       function: paymentModelFromJson,
     );
+    log("*********$response*************");
     if (response is Success) {
       if (response.response != null) {
-        _paymentModel = response.response as PaymentModel;
+        setPaymentModels(response.response as PaymentModel);
       }
     }
     if (response is Failures) {
@@ -70,7 +71,6 @@ class PaymentViewModel extends ChangeNotifier {
           state: "Maharashtra"),
     );
 
-
     await Stripe.instance.initPaymentSheet(
       paymentSheetParameters: SetupPaymentSheetParameters(
         paymentIntentClientSecret: _paymentModel!.clientSecret,
@@ -86,7 +86,7 @@ class PaymentViewModel extends ChangeNotifier {
   confirmPayment(BuildContext context) async {
     try {
       await Stripe.instance.presentPaymentSheet();
-
+      // await paymentToBackend(bookingId: _paymentModel!.id!, context: context);
       // ignore: use_build_context_synchronously
       Navigator.pushAndRemoveUntil(
           context,
@@ -131,10 +131,10 @@ class PaymentViewModel extends ChangeNotifier {
     return accessToken;
   }
 
-  setPaymentModel(PaymentModel? paymentModel) {
-    _paymentModel = paymentModel;
-    notifyListeners();
-  }
+  // setPaymentModel(PaymentModel? paymentModel) {
+  //   _paymentModel = paymentModel;
+  //   notifyListeners();
+  // }
 
   Future<void> payAmount({
     required String amount,
@@ -231,8 +231,7 @@ class PaymentViewModel extends ChangeNotifier {
       required String bookingId}) async {
     try {
       await Stripe.instance.presentPaymentSheet().then((value) {
-        paymentToBackend(
-            bookingId: bookingId, totalAmount: amount, context: context);
+        paymentToBackend(bookingId: bookingId, context: context);
 
         // _paymentModel = null;
       }).onError((error, stackTrace) {
@@ -265,6 +264,11 @@ class PaymentViewModel extends ChangeNotifier {
   PaymentModel? _paymentModel;
   PaymentModel? get paymentModel => _paymentModel;
 
+  setPaymentModels(PaymentModel? model) {
+    _paymentModel = model;
+    notifyListeners();
+  }
+
   errorResponses(Errors error, BuildContext context) {
     final statusCode = error.code;
 
@@ -279,18 +283,12 @@ class PaymentViewModel extends ChangeNotifier {
     );
   }
 
-  paymentToBackend(
-      {required String bookingId,
-      required String totalAmount,
-      required context}) async {
-    log("!@#%^&$_paymentModel");
+  paymentToBackend({required String bookingId, required context}) async {
     final url = Urls.baseUrl + Urls.user + Urls.userPayment;
     final accessToken = await getAccessToken();
     var headers = {"authorization": "Bearer $accessToken"};
-    log(_paymentModel!.toJson().toString());
     Map<String, dynamic> body = {
       "bookingId": bookingId,
-      "token": _paymentModel!.toJson().toString(),
     };
     final response = await ApiServices.postMethod(
       context: context,
@@ -309,12 +307,12 @@ class PaymentViewModel extends ChangeNotifier {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Row(
-                  children:  [
+                  children: [
                     Icon(
                       Icons.check_circle,
                       color: Colors.green,
                     ),
-                    Text("Payment Successfull"),
+                    Text("Payment Successfull completed..."),
                   ],
                 ),
               ],
