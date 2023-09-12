@@ -5,17 +5,18 @@ import 'package:provider/provider.dart';
 import 'package:rent_a_ride/components/common/common_snackbar.dart';
 import 'package:rent_a_ride/models/booking_details_model.dart';
 import 'package:rent_a_ride/models/car_booking_model.dart';
-import 'package:rent_a_ride/repo/api_services.dart';
-import 'package:rent_a_ride/repo/api_status.dart';
+import 'package:rent_a_ride/repository/api_services.dart';
+import 'package:rent_a_ride/repository/api_status.dart';
 import 'package:rent_a_ride/utils/colors.dart';
 import 'package:rent_a_ride/utils/textstyle.dart';
-import 'package:rent_a_ride/utils/url.dart';
+import 'package:rent_a_ride/utils/constants.dart';
 import 'package:rent_a_ride/view/car_payment.dart';
 import 'package:rent_a_ride/view_model/cars_view_model.dart';
 import 'package:rent_a_ride/view_model/places_view_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class BookingViewModel extends ChangeNotifier {
+  
   BookingDetails? _bookingDetail;
   BookingDetails? get bookingDetail => _bookingDetail;
 

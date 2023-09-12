@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rent_a_ride/components/common/common_appbar.dart';
 import 'package:rent_a_ride/utils/colors.dart';
+import 'package:rent_a_ride/utils/images.dart';
 import 'package:rent_a_ride/utils/space.dart';
 import 'package:rent_a_ride/utils/textstyle.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -12,7 +13,7 @@ class AboutUS extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: bodyColor,
+      backgroundColor: kBlack,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(size.height * 0.07),
         child: const CommonAppbar(
@@ -27,10 +28,10 @@ class AboutUS extends StatelessWidget {
             Center(
               child: Container(
                 height: size.width * 0.25,
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage(
-                      "assets/images/car3.png",
+                      Images.logo,
                     ),
                   ),
                 ),
@@ -40,7 +41,7 @@ class AboutUS extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Center(
                 child: Text(
-                  "Welcome To RENT_A_RIDE",
+                  "Welcome To RENT_MY_WHEELS",
                   style: textstyle(17, FontWeight.bold, kwhite),
                 ),
               ),

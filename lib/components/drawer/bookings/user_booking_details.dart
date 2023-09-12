@@ -93,7 +93,7 @@ class UserBookingDetails extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
+                         Text(
                           "PICK UP DATE",
                           style: hintStyle,
                         ),
@@ -107,7 +107,7 @@ class UserBookingDetails extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
+                         Text(
                           "PICK UP TIME",
                           style: hintStyle,
                         ),
@@ -121,7 +121,7 @@ class UserBookingDetails extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
+                         Text(
                           "DROP OFF DATE",
                           style: hintStyle,
                         ),
@@ -135,7 +135,7 @@ class UserBookingDetails extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
+                         Text(
                           "DROP OFF TIME",
                           style: hintStyle,
                         ),
@@ -149,7 +149,7 @@ class UserBookingDetails extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
+                         Text(
                           "DRIVER",
                           style: hintStyle,
                         ),
@@ -166,7 +166,7 @@ class UserBookingDetails extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
+                         Text(
                           "DROP OFF CITY",
                           style: hintStyle,
                         ),
@@ -181,7 +181,7 @@ class UserBookingDetails extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
+                         Text(
                           "TOTAL HOURS",
                           style: hintStyle,
                         ),
@@ -196,7 +196,7 @@ class UserBookingDetails extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
+                         Text(
                           "TOTAL AMOUNT",
                           style: hintStyle,
                         ),
@@ -211,7 +211,7 @@ class UserBookingDetails extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
+                         Text(
                           "PAYMENT",
                           style: hintStyle,
                         ),
@@ -234,7 +234,7 @@ class UserBookingDetails extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
+                         Text(
                           "STATUS",
                           style: hintStyle,
                         ),

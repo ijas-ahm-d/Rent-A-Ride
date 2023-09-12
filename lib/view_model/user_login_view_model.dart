@@ -1,19 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:rent_a_ride/components/common/common_snackbar.dart';
+import 'package:rent_a_ride/data/response/api_response.dart';
+import 'package:rent_a_ride/data/response/staus.dart';
 import 'package:rent_a_ride/models/user_login_model.dart';
-import 'package:rent_a_ride/repo/api_services.dart';
-import 'package:rent_a_ride/repo/api_status.dart';
+import 'package:rent_a_ride/repository/user_auth/user_login_repository.dart';
 import 'package:rent_a_ride/utils/colors.dart';
-import 'package:rent_a_ride/utils/url.dart';
+import 'package:rent_a_ride/utils/constants.dart';
+import 'package:rent_a_ride/utils/global_keys.dart';
 import 'package:rent_a_ride/view/home_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserLoginViewModel with ChangeNotifier {
-  // UserLoginViewModel() {
-  //   getUserDetails();
-  // }
+
+  final _myRepo = UserLoginRepository();
+
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
+  bool _passwordVisibility = true;
+  bool get passwordVisibility => _passwordVisibility;
 
   String? _userName;
   String? get userName => _userName;
@@ -21,23 +26,8 @@ class UserLoginViewModel with ChangeNotifier {
   String? _userEmail;
   String? get userEmail => _userEmail;
 
-  bool _passwordVisibility = true;
-  bool get passwordVisibility => _passwordVisibility;
-
   bool _isLoading = false;
   bool get isLoading => _isLoading;
-
-  UserLoginModel? _userData;
-  UserLoginModel get userData => _userData!;
-
-  LoginError? _loginError;
-  LoginError get loginError => _loginError!;
-
-// Function for password visibility
-  showPassword() {
-    _passwordVisibility = !passwordVisibility;
-    notifyListeners();
-  }
 
   getUserName(String? usrName) {
     _userName = usrName;
@@ -49,65 +39,47 @@ class UserLoginViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  // Function to know it is loading
   setLoading(bool loading) async {
     _isLoading = loading;
     notifyListeners();
   }
 
-  Future<UserLoginModel?>  setUserData(UserLoginModel userData) async {
-    _userData = userData;
-    return _userData;
-  }
-
-  //
-  setLoginError(LoginError loginError, context) async {
-    _loginError = loginError;
-    return errorResponses(_loginError!, context);
-  }
-
-  // Main function in user Login
   getLoginStatus(BuildContext context) async {
     final navigator = Navigator.of(context);
     setLoading(true);
     String url = Urls.baseUrl + Urls.user + Urls.userLogIn;
-    final response = await ApiServices.postMethod(
-      url: url,
-      data: userDataBody(),
-      context: context,
-      function: userLoginModelFromJson,
-    );
-
-    if (response is Success) {
-      final data = await setUserData(response.response as UserLoginModel);
-      final accessToken = data!.token;
-      final userId = data.sId;
-      final userName = data.fullName;
-      final userEmail = data.email;
-
-      setLoginStatus(
-          accessToken: accessToken!,
-          userId: userId!,
-          userName: userName!,
-          userEmail: userEmail!);
-      clearController();
-      navigator.pushAndRemoveUntil(MaterialPageRoute(
-        builder: (context) {
-          return const HomeScreen();
-        },
-      ), (route) => false);
-    }
-
-    if (response is Failures) {
-      await setLoading(false);
-      LoginError loginError = LoginError(
-        code: response.code,
-        message: response.errrorResponse,
-      );
-      // ignore: use_build_context_synchronously
-      await setLoginError(loginError, context);
-    }
+    _myRepo
+        .getUserLogin(url: url, body: userDataBody())
+        .then(
+          (value) => {
+            setLoginResponse(
+              ApiResponse.completed(value),
+              context,
+            ),
+            clearController(),
+            navigator.pushReplacement(
+              MaterialPageRoute(
+                builder: (context) {
+                  return const HomeScreen();
+                },
+              ),
+            ),
+          },
+        )
+        .onError(
+          (error, stackTrace) => {
+            setLoginResponse(
+              ApiResponse.error(error.toString()),
+              context,
+            ),
+            clearPswrd(),
+          },
+        );
     setLoading(false);
+  }
+
+  clearPswrd() {
+    passwordController.clear();
   }
 
   clearController() {
@@ -115,32 +87,11 @@ class UserLoginViewModel with ChangeNotifier {
     emailController.clear();
   }
 
-  // save the value of access token and make sure the user already login or not
-  // and also sacing user id
-  setLoginStatus({
-    required String accessToken,
-    required String userId,
-    required String userName,
-    required String userEmail,
-  }) async {
-    final status = await SharedPreferences.getInstance();
-    await status.setBool("isLoggedIn", true);
-    await status.setString("ACCESS_TOKEN", accessToken);
-    await status.setString("USER_ID", userId);
-    await status.setString("USER_NAME", userName);
-    await status.setString("USER_EMAIL", userEmail);
+  showPassword() {
+    _passwordVisibility = !passwordVisibility;
+    notifyListeners();
   }
 
-//GET THE UserName and email
-  getUserDetails() async {
-    final prefs = await SharedPreferences.getInstance();
-    final name = prefs.getString("USER_NAME");
-    final email = prefs.getString("USER_EMAIL");
-    getUserName(name);
-    getUserEmail(email);
-  }
-
-  // The body to pass in the method
   Map<String, dynamic> userDataBody() {
     final body = UserLoginModel(
       email: emailController.text.trim(),
@@ -149,19 +100,36 @@ class UserLoginViewModel with ChangeNotifier {
     return body.toJson();
   }
 
-  errorResponses(LoginError loginError, BuildContext context) {
-    final statusCode = loginError.code;
-    if (statusCode == 401 || statusCode == 500) {
-      return CommonSnackBAr.snackBar(
-          context: context,
-          data: "Invalid Username or password",
-          color: snackbarRed);
+  setLoginResponse(ApiResponse<UserLoginModel> response, BuildContext context) {
+    if (response.status == Status.completed) {
+      final data = response.data;
+      setLoginStatus(data!.token!, data.fullName!, data.email!, data.sId!);
+    } else if (response.status == Status.error) {
+      CommonSnackBAr.snackBar(
+        context: context,
+        data: response.message.toString(),
+        color: snackbarwarn,
+      );
     }
-    return CommonSnackBAr.snackBar(
-        context: context, data: "No internet connection", color: snackbarRed);
   }
-}
 
+  setLoginStatus(String aTkn, String uName, String uEmail, String uId) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setBool(GlobalKeys.userLoggedIn, true);
+    prefs.setString(GlobalKeys.accessToken, aTkn);
+    prefs.setString(GlobalKeys.userName, uName);
+    prefs.setString(GlobalKeys.userEmail, uEmail);
+    prefs.setString(GlobalKeys.userId, uId);
+  }
+
+  getUserDetails() async {
+    final prefs = await SharedPreferences.getInstance();
+    final name = prefs.getString(GlobalKeys.userName);
+    final email = prefs.getString(GlobalKeys.userEmail);
+    getUserName(name);
+    getUserEmail(email);
+  }
+}   
 class LoginError {
   int? code;
   Object? message;

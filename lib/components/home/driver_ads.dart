@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:rent_a_ride/utils/colors.dart';
+import 'package:rent_a_ride/utils/images.dart';
 import 'package:rent_a_ride/utils/space.dart';
 import 'package:rent_a_ride/utils/textstyle.dart';
 import 'package:rent_a_ride/view/driver_signup.dart';
 
 class HomeDriverAds extends StatelessWidget {
-  const HomeDriverAds({
-    super.key,
-
-  });
-
- 
+  const HomeDriverAds({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +64,7 @@ class HomeDriverAds extends StatelessWidget {
                     const SpaceWH(height: 10),
                     Text(
                       "Do you want to earn with us?",
-                      style: textstyle(
+                      style: textstyles(
                         17,
                         FontWeight.w600,
                         kBlack,
@@ -138,9 +134,9 @@ class HomeDriverAds extends StatelessWidget {
                     Container(
                       height: 80,
                       width: 180,
-                      decoration: const BoxDecoration(
+                      decoration:  BoxDecoration(
                         image: DecorationImage(
-                          image: AssetImage("assets/images/carOtp.png"),
+                          image: AssetImage(Images.driverCar),
                         ),
                       ),
                     ),

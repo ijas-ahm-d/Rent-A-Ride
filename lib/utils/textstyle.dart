@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:rent_a_ride/utils/colors.dart';
 
 TextStyle homeHead(size) {
-  return GoogleFonts.truculenta(
+  return GoogleFonts.robotoMono(
       wordSpacing: 2,
       color: grayText,
       fontWeight: FontWeight.w700,
@@ -15,59 +15,52 @@ TextStyle homeHead(size) {
       decorationColor: kBlack);
 }
 
-final headline = GoogleFonts.truculenta(
-  fontSize: 35,
+final headline = GoogleFonts.robotoMono(
+  fontSize: 30,
   letterSpacing: 3,
   color: kBlack,
   fontWeight: FontWeight.bold,
 );
 
-const headline1 = TextStyle(
+final headline1 = GoogleFonts.robotoMono(
   fontSize: 24,
-  color: kwhite,
+  color: kBlack,
   fontWeight: FontWeight.bold,
 );
 
-const headline2 = TextStyle(
+final headline2 = GoogleFonts.robotoMono(
   fontSize: 14,
   color: kwhite,
   fontWeight: FontWeight.w600,
 );
-const headline3 = TextStyle(
+final headline3 = GoogleFonts.robotoMono(
   fontSize: 14,
   color: grayText,
   fontWeight: FontWeight.bold,
 );
-final headline4 = GoogleFonts.truculenta(
+final headline4 = GoogleFonts.robotoMono(
   color: grayText,
   fontWeight: FontWeight.w700,
   letterSpacing: 2,
   fontSize: 20,
 );
-final headline5 = GoogleFonts.truculenta(
+final headline5 = GoogleFonts.robotoMono(
   color: kwhite,
   fontWeight: FontWeight.w700,
   letterSpacing: 2,
   fontSize: 20,
 );
 
-final headline6 = GoogleFonts.truculenta(
+final headline6 = GoogleFonts.robotoMono(
   color: kBlack,
   fontWeight: FontWeight.w700,
   letterSpacing: 2,
   fontSize: 20,
 );
-const hintStyle = TextStyle(
+final hintStyle = GoogleFonts.robotoMono(
   fontSize: 16,
   color: grayText,
   fontWeight: FontWeight.bold,
-);
-
-final splashHead = GoogleFonts.truculenta(
-  color: kBlack,
-  fontWeight: FontWeight.w700,
-  letterSpacing: 16,
-  fontSize: 30,
 );
 
 final titleCardName = GoogleFonts.montserrat(
@@ -76,6 +69,14 @@ final titleCardName = GoogleFonts.montserrat(
 );
 
 textstyle(double size, FontWeight fweight, Color clr) {
+  return GoogleFonts.robotoMono(
+    letterSpacing: 0.5,
+    fontSize: size,
+    fontWeight: fweight,
+    color: clr,
+  );
+}
+textstyles(double size, FontWeight fweight, Color clr) {
   return GoogleFonts.montserrat(
     letterSpacing: 0.5,
     fontSize: size,

@@ -1,9 +1,8 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'package:rent_a_ride/repo/api_services.dart';
-import 'package:rent_a_ride/repo/api_status.dart';
-import 'package:rent_a_ride/utils/url.dart';
+import 'package:rent_a_ride/repository/api_services.dart';
+import 'package:rent_a_ride/repository/api_status.dart';
+import 'package:rent_a_ride/utils/constants.dart';
 
 class Sample extends ChangeNotifier {
   Future<void> payAmount(context, amount) async {
@@ -17,7 +16,6 @@ class Sample extends ChangeNotifier {
       'amount': calculateAmount(amount),
       'currency': "INR",
       'payment_method_types[]': 'card',
-      // 'source': 'tok_visa',
     };
     final response = await ApiServices.postMethod(
       context: context,

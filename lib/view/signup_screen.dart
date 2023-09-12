@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:rent_a_ride/components/common/textformfield.dart';
@@ -43,15 +44,26 @@ class SignUpScreen extends StatelessWidget {
                           top: size.width * 0.06,
                           right: size.width * 0.06),
                       child: Text(
-                        "Welcome to RENT-A-RIDE",
+                        "WELCOME TO ",
+                        style: headline4,
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                          left: size.width * 0.06, right: size.width * 0.06),
+                      child: Text(
+                        "RENT-MY-WHEELS",
                         style: headline,
                         textAlign: TextAlign.center,
                       ),
                     ),
-
+                    const SizedBox(
+                      height: 10,
+                    ),
                     Text(
-                      "sign up this page for accessing cars",
-                      style: headline4,
+                      "sign up this page for accessing cars.",
+                      style: GoogleFonts.robotoMono(),
                       textAlign: TextAlign.center,
                     ),
 
@@ -139,28 +151,29 @@ class SignUpScreen extends StatelessWidget {
                                 .getSignUpStatus(context);
                           }
                         },
-                        child: const Padding(
-                          padding: EdgeInsets.all(10.0),
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
                           child: Text(
                             "Sign up",
+                            style: GoogleFonts.robotoMono(),
                           ),
                         ),
                       ),
                     ),
                     SizedBox(
-                        width: size.width * 0.5,
-                        height: size.width * 0.45,
-                        child: Image.asset(
-                          signupImage,
-                          color: kBlack,
-                        )),
+                      width: size.width * 0.5,
+                      height: size.width * 0.45,
+                      child: Image.asset(
+                      Images.  signupImage,
+                      ),
+                    ),
 
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text(
+                        Text(
                           "already have an account?",
-                          style: TextStyle(color: kBlack),
+                          style: GoogleFonts.robotoMono(color: kBlack),
                         ),
                         TextButton(
                           onPressed: () {
@@ -173,10 +186,10 @@ class SignUpScreen extends StatelessWidget {
                               ),
                             );
                           },
-                          child: const Text(
+                          child: Text(
                             "Login Now",
-                            style: TextStyle(
-                              color: Color.fromARGB(255, 53, 194, 193),
+                            style: GoogleFonts.robotoMono(
+                              color: specialGreen,
                             ),
                           ),
                         ),

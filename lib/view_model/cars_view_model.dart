@@ -1,10 +1,9 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:rent_a_ride/models/cars_data_model.dart';
-import 'package:rent_a_ride/repo/api_services.dart';
-import 'package:rent_a_ride/repo/api_status.dart';
-import 'package:rent_a_ride/utils/url.dart';
+import 'package:rent_a_ride/repository/api_services.dart';
+import 'package:rent_a_ride/repository/api_status.dart';
+import 'package:rent_a_ride/utils/constants.dart';
 
 class CarsViewModel extends ChangeNotifier {
   CarsViewModel() {

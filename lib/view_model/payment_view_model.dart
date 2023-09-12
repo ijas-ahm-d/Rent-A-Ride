@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:rent_a_ride/components/common/common_snackbar.dart';
 import 'package:rent_a_ride/models/payment_model.dart';
-import 'package:rent_a_ride/repo/api_services.dart';
-import 'package:rent_a_ride/repo/api_status.dart';
+import 'package:rent_a_ride/repository/api_services.dart';
+import 'package:rent_a_ride/repository/api_status.dart';
 import 'package:rent_a_ride/utils/colors.dart';
-import 'package:rent_a_ride/utils/url.dart';
+import 'package:rent_a_ride/utils/constants.dart';
 import 'package:rent_a_ride/view/home_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

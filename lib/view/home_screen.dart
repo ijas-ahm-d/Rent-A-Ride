@@ -14,7 +14,6 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final provider = context.watch<UserLoginViewModel>();
-  
     provider.getUserDetails();
 
     return Scaffold(

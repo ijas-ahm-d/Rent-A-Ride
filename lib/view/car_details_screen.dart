@@ -51,11 +51,10 @@ class CarDetailsScreen extends StatelessWidget {
               details: carData[index].description.toString(),
               place: carData[index].place.toString(),
             ),
-
 // Booking Section
             BookingInformations(
               index: index,
-              size: size,
+             
             ),
           ],
         ),

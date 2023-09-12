@@ -18,7 +18,7 @@ class PickUpDateTime extends StatelessWidget {
       children: [
         Text(
           "please select pickup date and time",
-          style: textstyle(15, FontWeight.w500, blueButton),
+          style: textstyle(15, FontWeight.w500, kBlack),
         ),
         const SpaceWH(height: 5),
         Row(

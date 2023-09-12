@@ -1,5 +1,6 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:rent_a_ride/utils/colors.dart';
 import 'package:rent_a_ride/utils/textstyle.dart';
@@ -94,14 +95,14 @@ class TextFormWidget extends StatelessWidget {
                     : const Icon(Icons.visibility),
               )
             : const SizedBox(),
-        counterStyle: const TextStyle(color: kwhite),
+        counterStyle:  GoogleFonts.robotoMono(color: kwhite),
         hintText: hintText,
         hintStyle: hintStyle,
         border: OutlineInputBorder(
             borderSide: BorderSide.none,
             borderRadius: BorderRadius.circular(15)),
       ),
-      style: TextStyle(
+      style: GoogleFonts.robotoMono(
         fontSize: size.width * 0.045,
         color: kwhite,
         fontWeight: FontWeight.bold,

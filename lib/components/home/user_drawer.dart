@@ -14,7 +14,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class UserDrawer extends StatelessWidget {
   const UserDrawer({
-    super.key,
+    super.key
   });
 
   @override

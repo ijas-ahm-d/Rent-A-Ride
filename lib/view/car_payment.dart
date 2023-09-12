@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:rent_a_ride/components/common/common_button.dart';
 import 'package:rent_a_ride/utils/colors.dart';
+import 'package:rent_a_ride/utils/images.dart';
 import 'package:rent_a_ride/utils/space.dart';
 import 'package:rent_a_ride/utils/textstyle.dart';
 import 'package:rent_a_ride/view_model/booking_view_model.dart';
@@ -61,6 +62,7 @@ class _CarPaymentScreenState extends State<CarPaymentScreen> {
                     TextButton(
                       onPressed: () async {
                         Navigator.pop(context);
+                        Navigator.pop(context);
                       },
                       child: const Text(
                         'Yes',
@@ -84,162 +86,165 @@ class _CarPaymentScreenState extends State<CarPaymentScreen> {
           style: textstyle(18, FontWeight.w500, kBlack),
         ),
       ),
-      body: Center(
-        child: Container(
-          padding: const EdgeInsets.all(20),
-          height: size.height * 0.8,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const SpaceWH(height: 20),
-              Container(
-                padding: const EdgeInsets.all(20),
-                height: 200,
-                child: Image.asset("assets/images/carLogo.png"),
-              ),
-              const SpaceWH(height: 20),
-              SizedBox(
-                width: size.width * 0.55,
-                height: size.width,
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "FROM",
-                          style: textstyle(15, FontWeight.normal, kBlack),
-                        ),
-                        Text(
-                          "${pick.day} $pickUp ${pick.year}",
-                        ),
-                      ],
-                    ),
-                    const SpaceWH(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "TO",
-                          style: textstyle(15, FontWeight.normal, kBlack),
-                        ),
-                        Text(
-                          "${drop.day} $dropOff ${drop.year}",
-                        ),
-                      ],
-                    ),
-                    const SpaceWH(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "DROP OFF CITY",
-                          style: textstyle(15, FontWeight.normal, kBlack),
-                        ),
-                        Text("${provider.dropoffCity}"),
-                      ],
-                    ),
-                    const SpaceWH(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "BOOKING STATUS",
-                          style: textstyle(15, FontWeight.normal, kBlack),
-                        ),
-                        Text("${provider.transactionId}"),
-                      ],
-                    ),
-                    const SpaceWH(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "TOTAL HOURS",
-                          style: textstyle(15, FontWeight.normal, kBlack),
-                        ),
-                        Text("${provider.totalHours}"),
-                      ],
-                    ),
-                    const SpaceWH(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "TOTAL AMOUNT",
-                          style: textstyle(15, FontWeight.bold, kBlack),
-                        ),
-                        Text(
-                          "${provider.totalAmount}",
-                          style: textstyle(14, FontWeight.bold, kBlack),
-                        ),
-                      ],
-                    ),
-                    const SpaceWH(
-                      height: 30,
-                    ),
-                    CommonButton(
-                      onTap: () {
-                        log('${provider.transactionId}');
-
-                        payment.pay(
-                            amount: provider.totalAmount.toString(),
-                            context: context);
-                      },
-                      color: blueButton,
-                      child: const Text(
-                        "PAY NOW",
-                        style: TextStyle(color: kwhite),
-                      ),
-                    ),
-                  ],
+      body: ColoredBox(
+        color: kwhite,
+        child: Center(
+          child: Container(
+            padding: const EdgeInsets.all(20),
+            height: size.height * 0.8,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const SpaceWH(height: 20),
+                Container(
+                  padding: const EdgeInsets.all(20),
+                  height: 200,
+                  child: Image.asset(Images.splashImage),
                 ),
-              ),
+                const SpaceWH(height: 20),
+                SizedBox(
+                  width: size.width * 0.55,
+                  height: size.width,
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "FROM",
+                            style: textstyle(15, FontWeight.normal, kBlack),
+                          ),
+                          Text(
+                            "${pick.day} $pickUp ${pick.year}",
+                          ),
+                        ],
+                      ),
+                      const SpaceWH(height: 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "TO",
+                            style: textstyle(15, FontWeight.normal, kBlack),
+                          ),
+                          Text(
+                            "${drop.day} $dropOff ${drop.year}",
+                          ),
+                        ],
+                      ),
+                      const SpaceWH(height: 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "DROP OFF CITY",
+                            style: textstyle(15, FontWeight.normal, kBlack),
+                          ),
+                          Text("${provider.dropoffCity}"),
+                        ],
+                      ),
+                      const SpaceWH(height: 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "BOOKING STATUS",
+                            style: textstyle(15, FontWeight.normal, kBlack),
+                          ),
+                          Text("${provider.transactionId}"),
+                        ],
+                      ),
+                      const SpaceWH(height: 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "TOTAL HOURS",
+                            style: textstyle(15, FontWeight.normal, kBlack),
+                          ),
+                          Text("${provider.totalHours}"),
+                        ],
+                      ),
+                      const SpaceWH(height: 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "TOTAL AMOUNT",
+                            style: textstyle(15, FontWeight.bold, kBlack),
+                          ),
+                          Text(
+                            "${provider.totalAmount}",
+                            style: textstyle(14, FontWeight.bold, kBlack),
+                          ),
+                        ],
+                      ),
+                      const SpaceWH(
+                        height: 30,
+                      ),
+                      CommonButton(
+                        onTap: () {
+                          log('${provider.transactionId}');
 
-              // ElevatedButton(
-              //   onPressed: () {
-              //     payment.payAmount(
-              //         amount: provider.totalAmount.toString(),
-              //         bookingId: provider.id.toString(),
-              //         context: context);
-              //   },
-              //   child: const Text("Backend"),
-              // ),
+                          payment.pay(
+                              amount: provider.totalAmount.toString(),
+                              context: context);
+                        },
+                        color: blueButton,
+                        child: const Text(
+                          "PAY NOW",
+                          style: TextStyle(color: kwhite),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
 
-              // ElevatedButton(
-              //   onPressed: () async {
-              //     var items = [
-              //       {
-              //         "productPrice": 4,
-              //         "productName": "Apple",
-              //         "qty": 5,
-              //       },
-              //       {
-              //         "productPrice": 5,
-              //         "productName": "Pineapple",
-              //         "qty": 10,
-              //       },
-              //     ];
-              //     await PaymentsViewModel.stripePaymentCheckout(
-              //       items,
-              //       500,
-              //       context,
-              //       mounted,
-              //       onSuccess: () {
-              //         log("SUCCESS");
-              //       },
-              //       onCancel: () {
-              //         log("CANCEL");
-              //       },
-              //       onError: (e) {
-              //         log("ERROR:$e");
-              //       },
-              //     );
-              //   },
-              //   child: const Text("checkout stripe"),
-              // ),
-            ],
+                // ElevatedButton(
+                //   onPressed: () {
+                //     payment.payAmount(
+                //         amount: provider.totalAmount.toString(),
+                //         bookingId: provider.id.toString(),
+                //         context: context);
+                //   },
+                //   child: const Text("Backend"),
+                // ),
+
+                // ElevatedButton(
+                //   onPressed: () async {
+                //     var items = [
+                //       {
+                //         "productPrice": 4,
+                //         "productName": "Apple",
+                //         "qty": 5,
+                //       },
+                //       {
+                //         "productPrice": 5,
+                //         "productName": "Pineapple",
+                //         "qty": 10,
+                //       },
+                //     ];
+                //     await PaymentsViewModel.stripePaymentCheckout(
+                //       items,
+                //       500,
+                //       context,
+                //       mounted,
+                //       onSuccess: () {
+                //         log("SUCCESS");
+                //       },
+                //       onCancel: () {
+                //         log("CANCEL");
+                //       },
+                //       onError: (e) {
+                //         log("ERROR:$e");
+                //       },
+                //     );
+                //   },
+                //   child: const Text("checkout stripe"),
+                // ),
+              ],
+            ),
           ),
         ),
       ),

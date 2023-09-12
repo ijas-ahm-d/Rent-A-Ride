@@ -37,21 +37,31 @@ class OtpScreen extends StatelessWidget {
                         height: size.height * 0.07,
                       ),
                       Text(
-                        'Verification Code',
-                        style: headline,
+                        'VERIFICATION CODE',
+                        style: headline4,
                       ),
                       const SpaceWH(
                         height: 8.0,
                       ),
                       Text(
                         'Please enter the verification code that we have sent to your phonenumber',
-                        style: headline4,
+                        style: textstyle(15, FontWeight.w500, kBlack),
                       ),
                       SizedBox(
-                        height: size.height * 0.1,
+                        height: size.height * 0.05,
                       ),
-
-                      /// pinput package we will use here
+                      Center(
+                        child: SizedBox(
+                          height: size.width * 0.7,
+                          width: size.width * 0.7,
+                          child: Image.asset(
+                          Images.  otpImage,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: size.height * 0.05,
+                      ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20.0),
                         child: SizedBox(
@@ -84,7 +94,7 @@ class OtpScreen extends StatelessWidget {
                               textStyle: GoogleFonts.poppins(
                                   fontSize: 20, color: kBlack),
                               decoration: BoxDecoration(
-                                color:const Color.fromARGB(232, 232, 235, 241),
+                                color: const Color.fromARGB(232, 232, 235, 241),
                                 borderRadius: BorderRadius.circular(24),
                               ),
                             ),
@@ -92,8 +102,7 @@ class OtpScreen extends StatelessWidget {
                               width: 60,
                               height: 60,
                               textStyle: GoogleFonts.poppins(
-                                  fontSize: 20, color: kBlack
-                                  ),
+                                  fontSize: 20, color: kBlack),
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(8),
@@ -139,21 +148,17 @@ class OtpScreen extends StatelessWidget {
                                     .otpButton(context);
                               }
                             },
-                            child: const Padding(
-                              padding: EdgeInsets.all(15.0),
+                            child: Padding(
+                              padding: const EdgeInsets.all(15.0),
                               child: Text(
                                 "Verify",
+                                style: textstyle(
+                                  15,
+                                  FontWeight.bold,
+                                  kwhite,
+                                ),
                               ),
                             ),
-                          ),
-                        ),
-                      ),
-                      Center(
-                        child: SizedBox(
-                          height: size.width * 0.7,
-                          width: size.width * 0.7,
-                          child: Image.asset(
-                            otpImage,
                           ),
                         ),
                       ),
@@ -163,9 +168,13 @@ class OtpScreen extends StatelessWidget {
                       Center(
                         child: TextButton(
                           onPressed: () {},
-                          child: const Text(
+                          child: Text(
                             'Resend code?',
-                            style: TextStyle(color: specialGreen),
+                            style: textstyle(
+                              15,
+                              FontWeight.w500,
+                              specialGreen,
+                            ),
                           ),
                         ),
                       ),

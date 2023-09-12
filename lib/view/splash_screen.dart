@@ -1,5 +1,6 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:rent_a_ride/utils/images.dart';
 import 'package:rent_a_ride/utils/space.dart';
 import 'package:rent_a_ride/utils/textstyle.dart';
@@ -15,9 +16,9 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-// MediaQuery
+    
+
     final size = MediaQuery.of(context).size;
-// Animated SplashScreen
     return FutureBuilder(
       future: loggedIn(),
       builder: (context, snapshot) {
@@ -35,16 +36,21 @@ class SplashScreen extends StatelessWidget {
           splash: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Title
-              Text("RENT-A-RIDE", style: splashHead),
+              Text("RENT-MY-WHEELS", style: headline),
+              const SizedBox(
+                height: 5,
+              ),
+              Text(
+                "Your road to easy car rentals!",
+                style: GoogleFonts.robotoMono(),
+              ),
               SpaceWH(
                 height: size.width * 0.1,
               ),
-              // Logo
               SizedBox(
                 width: size.width * 0.8,
                 child: Image.asset(
-                  splashImage,
+                  Images.splashImage,
                 ),
               ),
             ],
@@ -57,6 +63,7 @@ class SplashScreen extends StatelessWidget {
   }
 
   Future<Widget> loggedIn() async {
+    
     final prefs = await SharedPreferences.getInstance();
     final isLoggedIn = prefs.getBool("isLoggedIn") ?? false;
     if (isLoggedIn == false) {

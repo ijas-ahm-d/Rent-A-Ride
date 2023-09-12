@@ -1,6 +1,9 @@
+import 'package:shared_preferences/shared_preferences.dart';
+
 class Urls {
+  static String access = "ACCESS_TOKEN";
+
 //BASE URL
-// static String baseUrl = "http://192.168.45.198:7000/api";
   static String baseUrl = "https://fastrack-backend.onrender.com/api";
   static String bearer = "Bearer ";
 
@@ -10,6 +13,7 @@ class Urls {
   static String admin = "/admin";
 
 // USER
+
   static String userLogIn = "/userLogin";
   static String userSignUp = "/userSignup";
   static String userOtp = "/otp";
@@ -32,7 +36,16 @@ class Urls {
 // Backend
   // static String secret =
   //     "sk_test_51Mg3gFSFAwfsuLHcq2QhP0MfWq9lShezSoFqHDSlhi9o0h8VTYkEkNyH9Uqr8IQ9jkIfQbdYBHi4iDQWPOlumv1n00CYybWskj";
-  
+
 // Mine
-  static String secret = "sk_test_51N3uIVSEurDXAlrNt3MACweCTEaw1GB0ROV5ALzXAKGFRmym64DCmOWcvvZ85QjMaEDv8p3ei4qdnBL3SCVXQCn000wiLNcatO";
+  static String secret =
+      "sk_test_51N3uIVSEurDXAlrNt3MACweCTEaw1GB0ROV5ALzXAKGFRmym64DCmOWcvvZ85QjMaEDv8p3ei4qdnBL3SCVXQCn000wiLNcatO";
+}
+
+class AccessToken {
+  static Future<String?> getAccessToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    final accessToken = prefs.getString(Urls.access);
+    return accessToken;
+  }
 }

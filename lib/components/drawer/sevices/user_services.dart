@@ -69,7 +69,6 @@ class UserServices extends StatelessWidget {
 class ServiceCard extends StatelessWidget {
   const ServiceCard({
     super.key,
-    // required this.size,
     required this.title,
     required this.content,
     required this.icon,
@@ -77,7 +76,6 @@ class ServiceCard extends StatelessWidget {
   final String title;
   final String content;
   final IconData icon;
-  // final Size size;
 
   @override
   Widget build(BuildContext context) {

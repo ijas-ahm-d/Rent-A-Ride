@@ -1,20 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:rent_a_ride/components/common/textformfield.dart';
 import 'package:rent_a_ride/utils/images.dart';
 import 'package:rent_a_ride/utils/space.dart';
 import 'package:rent_a_ride/utils/textstyle.dart';
+import 'package:rent_a_ride/view/home_screen.dart';
 import 'package:rent_a_ride/view/signup_screen.dart';
 import 'package:rent_a_ride/view_model/user_login_view_model.dart';
 import '../utils/colors.dart';
 import 'package:lottie/lottie.dart';
-
-/// This screen is for user login
-/// If the user have already an account
-/// on our application then user can Log in
-/// and if the user has no account then
-/// user can create a new account using the
-/// Register now link;
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
@@ -48,13 +43,24 @@ class LoginScreen extends StatelessWidget {
                       SpaceWH(
                         height: size.width * 0.1,
                       ),
-                      // Greating text
+                      
                       Padding(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: size.width * 0.02),
+                        padding: EdgeInsets.only(
+                            left: size.width * 0.06,
+                            top: size.width * 0.06,
+                            right: size.width * 0.06),
                         child: Text(
-                          "Welcome back! \nGlad to see you, Again!",
-                          style: headline,
+                          "Welcome back!",
+                          style: headline4,
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            left: size.width * 0.06, right: size.width * 0.06),
+                        child: Text(
+                          "Glad to see you, Again!",
+                          style: headline1,
                           textAlign: TextAlign.center,
                         ),
                       ),
@@ -98,11 +104,11 @@ class LoginScreen extends StatelessWidget {
                                 size: size),
                           ),
                           //*****------------ FORGET PASSWORD ----------------*****//
-                          const Row(
+                          Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               Text("forget your password?", style: headline3),
-                              SpaceWH(
+                              const SpaceWH(
                                 width: 25,
                               )
                             ],
@@ -115,7 +121,7 @@ class LoginScreen extends StatelessWidget {
                       Padding(
                         padding: EdgeInsets.symmetric(
                             horizontal: size.width * 0.1,
-                            vertical: size.width * 0.09),
+                            vertical: size.width * 0.07),
                         child: ElevatedButton(
                           style: ButtonStyle(
                             backgroundColor:
@@ -130,30 +136,50 @@ class LoginScreen extends StatelessWidget {
                                   .getLoginStatus(context);
                             }
                           },
-                          child: const Padding(
-                            padding: EdgeInsets.all(15.0),
+                          child: Padding(
+                            padding: const EdgeInsets.all(15.0),
                             child: Text(
                               "Login",
+                              style: GoogleFonts.robotoMono(),
                             ),
                           ),
                         ),
+                      ),
+                      InkWell(
+                        onTap: () => Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const HomeScreen(),
+                          ),
+                        ),
+                        child: Center(
+                          child: Text(
+                            "Guest",
+                            style: GoogleFonts.robotoMono(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              color: kBlack,
+                            ),
+                          ),
+                        ),
+                      ),
+                      SpaceWH(
+                        height: size.width * 0.05,
                       ),
                       SizedBox(
                         height: size.width * 0.5,
                         width: size.width * 0.5,
                         child: Image.asset(
-                          loginImage,
+                         Images. loginImage,
                         ),
                       ),
-                      SpaceWH(
-                        height: size.width * 0.03,
-                      ),
+
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text(
+                          Text(
                             "Don’t have an account?",
-                            style: TextStyle(color: kBlack),
+                            style: GoogleFonts.robotoMono(color: kBlack),
                           ),
                           TextButton(
                             onPressed: () {
@@ -166,9 +192,9 @@ class LoginScreen extends StatelessWidget {
                                 ),
                               );
                             },
-                            child: const Text(
+                            child: Text(
                               "Register Now",
-                              style: TextStyle(
+                              style: GoogleFonts.robotoMono(
                                 color: specialGreen,
                               ),
                             ),
