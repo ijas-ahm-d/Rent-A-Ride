@@ -10,6 +10,11 @@
 .svn/
 migrate_working_dir/
 
+
+# ignore files
+lib\utils\global_keys.dart
+lib\utils\constants.dart
+
 # IntelliJ related
 *.iml
 *.ipr
