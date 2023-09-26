@@ -11,7 +11,7 @@ class CommonShimmer extends StatelessWidget {
     required this.height,
     this.shapeBorder = const RoundedRectangleBorder(),
   });
-  // : shapeBorder = const RoundedRectangleBorder();
+ 
 
   const CommonShimmer.circular(
       {super.key,
