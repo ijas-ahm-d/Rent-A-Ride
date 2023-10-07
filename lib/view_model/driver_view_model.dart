@@ -8,7 +8,7 @@ import 'package:rent_a_ride/models/driver_login_model.dart';
 import 'package:rent_a_ride/repository/api_services.dart';
 import 'package:rent_a_ride/repository/api_status.dart';
 import 'package:rent_a_ride/utils/colors.dart';
-import 'package:rent_a_ride/utils/constants.dart';
+import 'package:rent_a_ride/utils/constant.dart';
 import 'package:rent_a_ride/view/driver_screen.dart';
 import 'package:rent_a_ride/view/home_screen.dart';
 import 'package:rent_a_ride/view_model/user_login_view_model.dart';

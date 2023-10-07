@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:rent_a_ride/data/response/api_response.dart';
 import 'package:rent_a_ride/models/place_data_model.dart';
 import 'package:rent_a_ride/repository/all_places_repository.dart';
-import 'package:rent_a_ride/utils/constants.dart';
+import 'package:rent_a_ride/utils/constant.dart';
 
 class PlacesViewModel extends ChangeNotifier {
   PlacesViewModel() {

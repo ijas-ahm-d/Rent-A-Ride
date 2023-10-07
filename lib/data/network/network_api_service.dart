@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:rent_a_ride/data/app_exceptions.dart';
 import 'package:rent_a_ride/data/network/http_api_service.dart';
-import 'package:rent_a_ride/utils/constants.dart';
+import 'package:rent_a_ride/utils/constant.dart';
 
 class NetWorkApiServices extends HttpApiServices {
   @override

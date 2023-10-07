@@ -5,7 +5,7 @@ import 'package:rent_a_ride/data/response/staus.dart';
 import 'package:rent_a_ride/models/user_login_model.dart';
 import 'package:rent_a_ride/repository/user_auth/user_login_repository.dart';
 import 'package:rent_a_ride/utils/colors.dart';
-import 'package:rent_a_ride/utils/constants.dart';
+import 'package:rent_a_ride/utils/constant.dart';
 import 'package:rent_a_ride/utils/global_keys.dart';
 import 'package:rent_a_ride/view/home_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';

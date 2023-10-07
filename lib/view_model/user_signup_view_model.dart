@@ -7,7 +7,7 @@ import 'package:rent_a_ride/models/user_signup_model.dart';
 import 'package:rent_a_ride/repository/api_services.dart';
 import 'package:rent_a_ride/repository/api_status.dart';
 import 'package:rent_a_ride/utils/colors.dart';
-import 'package:rent_a_ride/utils/constants.dart';
+import 'package:rent_a_ride/utils/constant.dart';
 import 'package:rent_a_ride/view/home_screen.dart';
 import 'package:rent_a_ride/view/otp_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';

@@ -2,7 +2,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:rent_a_ride/repository/api_services.dart';
 import 'package:rent_a_ride/repository/api_status.dart';
-import 'package:rent_a_ride/utils/constants.dart';
+import 'package:rent_a_ride/utils/constant.dart';
 
 class Sample extends ChangeNotifier {
   Future<void> payAmount(context, amount) async {

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:rent_a_ride/models/my_bookings_model.dart';
 import 'package:rent_a_ride/repository/api_services.dart';
 import 'package:rent_a_ride/repository/api_status.dart';
-import 'package:rent_a_ride/utils/constants.dart';
+import 'package:rent_a_ride/utils/constant.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MyBookingsViewModel extends ChangeNotifier {

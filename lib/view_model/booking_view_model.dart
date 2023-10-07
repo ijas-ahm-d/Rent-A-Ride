@@ -9,7 +9,7 @@ import 'package:rent_a_ride/repository/api_services.dart';
 import 'package:rent_a_ride/repository/api_status.dart';
 import 'package:rent_a_ride/utils/colors.dart';
 import 'package:rent_a_ride/utils/textstyle.dart';
-import 'package:rent_a_ride/utils/constants.dart';
+import 'package:rent_a_ride/utils/constant.dart';
 import 'package:rent_a_ride/view/car_payment.dart';
 import 'package:rent_a_ride/view_model/cars_view_model.dart';
 import 'package:rent_a_ride/view_model/places_view_model.dart';
