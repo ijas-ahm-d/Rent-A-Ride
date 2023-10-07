@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:rent_a_ride/data/response/api_response.dart';
 import 'package:rent_a_ride/models/place_data_model.dart';
-import 'package:rent_a_ride/repository/all_places_repository.dart';
+import 'package:rent_a_ride/repository/api_services.dart';
+import 'package:rent_a_ride/repository/api_status.dart';
 import 'package:rent_a_ride/utils/constant.dart';
 
 class PlacesViewModel extends ChangeNotifier {
@@ -9,46 +9,60 @@ class PlacesViewModel extends ChangeNotifier {
     getAllPlaces();
   }
 
-  final _myRepo = AllPlacesRepository();
+  bool _isLoading = false;
+  bool get isloading => _isLoading;
 
-  ApiResponse<List<PlaceDataModel>> _placeDataList = ApiResponse.loading();
-  ApiResponse<List<PlaceDataModel>> get placeDataList => _placeDataList;
+  List<PlaceDataModel> _placeDataList = [];
+  List<PlaceDataModel> get placeDataList => _placeDataList;
+
+  final List<String> _placeList = [];
+  List<String> get placeList => _placeList;
 
   String? _dropbutton;
   String? get dropbutton => _dropbutton;
+
+  setLoading(bool loading) async {
+    _isLoading = loading;
+    notifyListeners();
+  }
 
   setDropDown(String value) {
     _dropbutton = value;
     notifyListeners();
   }
 
-  setAllPlaces(ApiResponse<List<PlaceDataModel>> data) async {
+  getDropValue() {
+    _dropbutton = _placeList.first;
+    notifyListeners();
+  }
+
+  getPlaces() {
+    for (var place in placeDataList) {
+      placeList.add(place.place!);
+    }
+  }
+
+  setAllPlaceListData(List<PlaceDataModel> data) async {
     _placeDataList = data;
     notifyListeners();
   }
 
   getAllPlaces() async {
+    setLoading(true);
     String url = Urls.baseUrl + Urls.admin + Urls.getAllPlaces;
-    _myRepo
-        .getAllPlaces(
-          url: url,
-        )
-        .then(
-          (value) => {
-            setAllPlaces(
-              ApiResponse.completed(value),
-            )
-          },
-        )
-        .onError(
-          (error, stackTrace) => {
-            setAllPlaces(
-              ApiResponse.error(
-                error.toString(),
-              ),
-            ),
-          },
-        );
+    final response = await ApiServices.getMEthod(
+      url: url,
+      function: placeDataModelFromJson,
+    );
+
+    if (response is Success) {
+      await setAllPlaceListData(response.response as List<PlaceDataModel>);
+      await getPlaces();
+      getDropValue();
+    }
+    if (response is Failures) {
+      setLoading(false);
+    }
+    setLoading(false);
   }
- 
 }

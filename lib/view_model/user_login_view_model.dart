@@ -11,11 +11,18 @@ import 'package:rent_a_ride/view/home_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserLoginViewModel with ChangeNotifier {
+  UserLoginViewModel() {
+    checkSign();
+    getUserDetails();
+  }
 
   final _myRepo = UserLoginRepository();
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
+  bool _isLoggedIn = false;
+  bool get isLoggedIn => _isLoggedIn;
 
   bool _passwordVisibility = true;
   bool get passwordVisibility => _passwordVisibility;
@@ -41,6 +48,12 @@ class UserLoginViewModel with ChangeNotifier {
 
   setLoading(bool loading) async {
     _isLoading = loading;
+    notifyListeners();
+  }
+
+  void checkSign() async {
+    final SharedPreferences s = await SharedPreferences.getInstance();
+    _isLoggedIn = s.getBool(GlobalKeys.userLoggedIn) ?? false;
     notifyListeners();
   }
 
@@ -129,7 +142,8 @@ class UserLoginViewModel with ChangeNotifier {
     getUserName(name);
     getUserEmail(email);
   }
-}   
+}
+
 class LoginError {
   int? code;
   Object? message;

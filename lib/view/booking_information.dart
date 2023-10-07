@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:rent_a_ride/data/response/staus.dart';
 import 'package:rent_a_ride/utils/colors.dart';
 import 'package:rent_a_ride/utils/space.dart';
 import 'package:rent_a_ride/utils/textstyle.dart';
@@ -20,6 +19,8 @@ class BookingInformations extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+        final providerplaces = context.watch<PlacesViewModel>();
+
     final size = MediaQuery.of(context).size;
     return Container(
       margin: const EdgeInsets.fromLTRB(20, 15, 20, 10),
@@ -43,62 +44,44 @@ class BookingInformations extends StatelessWidget {
                       Radius.circular(10.0),
                     ),
                   ),
-                  child: Consumer<PlacesViewModel>(
-                    builder: (context, value, child) {
-                      switch (value.placeDataList.status) {
-                        case Status.loading:
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        case Status.error:
-                          return const Text("No Internet connection");
-                        case Status.completed:
-                          final placesList = value.placeDataList.data!;
-                          return DropdownButtonFormField<String>(
-                            decoration: const InputDecoration(
-                              prefixText: "DROP OF CITY : ",
-                              prefixStyle: TextStyle(
-                                color: grayText,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15,
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(10.0),
-                                ),
-                              ),
-                            ),
-                            dropdownColor: grayText,
-                            value: placesList[index].place,
-                            iconSize: 20,
-                            elevation: 16,
-                            icon: const Icon(
-                              Icons.arrow_drop_down_circle,
-                              color: kwhite,
-                            ),
-                            items: [
-                              for (int index = 0;
-                                  index < placesList.length;
-                                  index++)
-                                DropdownMenuItem<String>(
-                                  value: placesList[index].place,
-                                  child: Text(
-                                    placesList[index].place.toString(),
-                                    style:
-                                        textstyle(14, FontWeight.bold, kwhite),
-                                  ),
-                                ),
-                            ],
-                            onChanged: (newValue) {
-                              value.setDropDown(newValue!);
-                            },
-                          );
-                        default:
-                          return const SizedBox();
-                      }
+                  child: DropdownButtonFormField<String>(
+                    decoration: const InputDecoration(
+                      prefixText: "DROP OF CITY : ",
+                      prefixStyle: TextStyle(
+                        color: kwhite,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(10.0),
+                        ),
+                      ),
+                    ),
+                    dropdownColor: grayText,
+                    value: providerplaces.dropbutton,
+                    iconSize: 20,
+                    elevation: 16,
+                    icon: const Icon(
+                      Icons.arrow_drop_down_circle,
+                      color: kwhite,
+                    ),
+                    items: providerplaces.placeList.map((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(
+                          value,
+                          style: textstyle(14, FontWeight.bold, kwhite),
+                        ),
+                      );
+                    }).toList(),
+                    onChanged: (newValue) {
+                      providerplaces.setDropDown(newValue!);
                     },
                   ),
                 ),
+                  
+              
                 const SpaceWH(height: 15),
                 Consumer<BookingViewModel>(
                   builder: (context, pro, child) {

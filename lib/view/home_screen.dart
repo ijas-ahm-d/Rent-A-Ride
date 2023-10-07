@@ -6,6 +6,7 @@ import 'package:rent_a_ride/components/home/offer_section.dart';
 import 'package:rent_a_ride/components/home/user_drawer.dart';
 import 'package:rent_a_ride/utils/colors.dart';
 import 'package:rent_a_ride/utils/textstyle.dart';
+import 'package:rent_a_ride/view_model/cars_view_model.dart';
 import 'package:rent_a_ride/view_model/user_login_view_model.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -13,9 +14,10 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final pro = context.watch<CarsViewModel>();
     final provider = context.watch<UserLoginViewModel>();
-    provider.getUserDetails();
-
+    // provider.getUserDetails();
+    // pro.getAllCars();
     return Scaffold(
       backgroundColor: kwhite,
       drawer: const Drawer(
